@@ -1,0 +1,5785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ExploreMyVillage | Sustainable Rural Tourism</title>
+
+<style>
+
+/* =====================================================
+   GOOGLE FONTS
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+:root{
+    --bg:#06110d;
+    --bg2:#0a1c14;
+    --card:#10271d;
+    --card2:#153528;
+    --card3:#1c4433;
+
+    --green:#39e879;
+    --green2:#9cffbc;
+
+    --yellow:#ffd75a;
+
+    --white:#f5fff8;
+    --muted:#9bb3a5;
+
+    --border:rgba(255,255,255,.10);
+
+    --danger:#ff6b6b;
+
+    --shadow:
+        0 25px 70px rgba(0,0,0,.35);
+}
+
+html{
+    scroll-padding-top:90px;
+}
+
+body{
+    font-family:Inter,sans-serif;
+    color:var(--white);
+    line-height:1.6;
+    min-height:100vh;
+    overflow-x:hidden;
+
+    background:
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(57,232,121,.15),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 95% 8%,
+            rgba(255,215,90,.09),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 70%,
+            rgba(57,232,121,.04),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #06110d,
+            #081711,
+            #06110d
+        );
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.12;
+
+    background-image:
+        radial-gradient(
+            rgba(255,255,255,.3) 1px,
+            transparent 1px
+        );
+
+    background-size:35px 35px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 90%
+        );
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+}
+
+::selection{
+    background:var(--green);
+    color:#04100a;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:76px;
+
+    padding:12px 5%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:25px;
+
+    background:
+        rgba(4,15,10,.78);
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.20);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+
+    gap:11px;
+
+    color:var(--green);
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:23px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.logo-icon{
+    width:43px;
+    height:43px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(57,232,121,.20),
+            rgba(57,232,121,.04)
+        );
+
+    border:
+        1px solid rgba(57,232,121,.30);
+
+    box-shadow:
+        0 0 30px rgba(57,232,121,.10);
+
+    transition:.3s;
+}
+
+.logo:hover .logo-icon{
+    transform:
+        rotate(-8deg)
+        scale(1.08);
+
+    box-shadow:
+        0 0 35px
+        rgba(57,232,121,.25);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.nav-links a{
+    position:relative;
+
+    padding:9px 15px;
+
+    color:#d9ebe0;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    border-radius:10px;
+
+    transition:.25s;
+}
+
+.nav-links a::after{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:3px;
+
+    width:0;
+    height:2px;
+
+    background:var(--green);
+
+    border-radius:10px;
+
+    transform:translateX(-50%);
+
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:var(--green2);
+
+    background:
+        rgba(57,232,121,.07);
+}
+
+.nav-links a:hover::after{
+    width:55%;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.profile-avatar{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--card3),
+            var(--card)
+        );
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        inset 0 0 15px
+        rgba(255,255,255,.03);
+}
+
+#profileName{
+    color:var(--green2);
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.login-btn,
+.primary-btn,
+.secondary-btn,
+.small-btn{
+    border:none;
+
+    border-radius:12px;
+
+    padding:11px 17px;
+
+    font-weight:800;
+
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        background .25s;
+}
+
+.login-btn,
+.primary-btn{
+    color:#04100a;
+
+    background:
+        linear-gradient(
+            135deg,
+            #39e879,
+            #9affbc
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(57,232,121,.14);
+}
+
+.login-btn:hover,
+.primary-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 16px 35px
+        rgba(57,232,121,.28);
+}
+
+.secondary-btn,
+.small-btn{
+    background:
+        rgba(255,255,255,.055);
+
+    color:white;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+}
+
+.secondary-btn:hover,
+.small-btn:hover{
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(57,232,121,.35);
+
+    background:
+        rgba(57,232,121,.08);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    min-height:620px;
+
+    padding:90px 6% 80px;
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1.05fr)
+        minmax(400px,.95fr);
+
+    align-items:center;
+
+    gap:70px;
+
+    position:relative;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    right:8%;
+    top:10%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(57,232,121,.12),
+            transparent 65%
+        );
+
+    filter:blur(15px);
+
+    pointer-events:none;
+}
+
+.badge{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    background:
+        rgba(57,232,121,.08);
+
+    color:var(--green2);
+
+    border:
+        1px solid rgba(57,232,121,.25);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:.8px;
+}
+
+.hero h1{
+    margin-top:22px;
+
+    max-width:850px;
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:
+        clamp(48px,6vw,78px);
+
+    line-height:.99;
+
+    letter-spacing:-2px;
+}
+
+.hero h1 span{
+    display:inline-block;
+
+    color:var(--green);
+
+    background:
+        linear-gradient(
+            90deg,
+            #39e879,
+            #a2ffc0
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:690px;
+
+    margin-top:24px;
+
+    color:var(--muted);
+
+    font-size:17px;
+
+    line-height:1.8;
+}
+
+.hero-actions{
+    display:flex;
+
+    gap:13px;
+
+    margin-top:32px;
+
+    flex-wrap:wrap;
+}
+
+
+/* =====================================================
+   CANVAS
+===================================================== */
+
+.canvas-card{
+    min-height:380px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,48,35,.82),
+            rgba(5,18,12,.92)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        var(--shadow),
+        inset 0 1px 0
+        rgba(255,255,255,.06);
+
+    transform:
+        perspective(900px)
+        rotateY(-2deg);
+
+    transition:.4s;
+}
+
+.canvas-card:hover{
+    transform:
+        perspective(900px)
+        rotateY(0deg)
+        translateY(-5px);
+
+    border-color:
+        rgba(57,232,121,.28);
+}
+
+.canvas-card::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(57,232,121,.07),
+            transparent 45%,
+            rgba(255,215,90,.05)
+        );
+
+    pointer-events:none;
+}
+
+#villageCanvas{
+    width:100%;
+    height:380px;
+
+    display:block;
+}
+
+.canvas-content{
+    position:absolute;
+
+    left:22px;
+    right:22px;
+    bottom:22px;
+
+    max-width:370px;
+
+    padding:19px 20px;
+
+    border-radius:16px;
+
+    background:
+        rgba(4,15,10,.72);
+
+    backdrop-filter:blur(18px);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,.22);
+}
+
+.canvas-content small{
+    color:var(--green);
+
+    font-weight:800;
+
+    letter-spacing:.6px;
+}
+
+.canvas-content h3{
+    margin-top:2px;
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:25px;
+}
+
+.canvas-content p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:4px;
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.stats{
+    padding:
+        0 5% 75px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+}
+
+.stat-card{
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,43,32,.90),
+            rgba(9,27,19,.88)
+        );
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.18);
+
+    transition:.3s;
+}
+
+.stat-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    right:-35px;
+    top:-35px;
+
+    border-radius:50%;
+
+    background:
+        rgba(57,232,121,.08);
+}
+
+.stat-card:hover{
+    transform:translateY(-6px);
+
+    border-color:
+        rgba(57,232,121,.30);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.30);
+}
+
+.stat-card small{
+    color:var(--muted);
+
+    font-weight:700;
+
+    font-size:11px;
+
+    letter-spacing:.6px;
+}
+
+.stat-card strong{
+    display:block;
+
+    color:var(--green);
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:38px;
+
+    line-height:1;
+
+    margin-top:8px;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section{
+    padding:85px 5%;
+
+    position:relative;
+}
+
+.section-heading,
+.section-title{
+    text-align:center;
+
+    max-width:850px;
+
+    margin:
+        0 auto 38px;
+}
+
+.section-heading small,
+.section-title small{
+    color:var(--green);
+
+    font-weight:800;
+
+    letter-spacing:.8px;
+
+    font-size:11px;
+}
+
+.section-heading h2,
+.section-title h2{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:
+        clamp(32px,4vw,44px);
+
+    line-height:1.1;
+
+    margin-top:7px;
+}
+
+.section-heading p,
+.section-title p{
+    color:var(--muted);
+
+    margin-top:12px;
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+.filters{
+    max-width:1400px;
+
+    margin:
+        0 auto 28px;
+
+    display:grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr;
+
+    gap:12px;
+
+    padding:14px;
+
+    border-radius:18px;
+
+    background:
+        rgba(16,40,30,.55);
+
+    border:
+        1px solid var(--border);
+
+    backdrop-filter:blur(12px);
+}
+
+.filters input,
+.filters select,
+.form-group input,
+.form-group select{
+    width:100%;
+
+    padding:14px 15px;
+
+    background:
+        rgba(4,17,11,.75);
+
+    color:white;
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    border-radius:11px;
+
+    outline:none;
+
+    transition:.25s;
+}
+
+.filters input::placeholder{
+    color:#71877b;
+}
+
+.filters input:focus,
+.filters select:focus,
+.form-group input:focus,
+.form-group select:focus{
+    border-color:var(--green);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(57,232,121,.08);
+}
+
+
+/* =====================================================
+   LOCATION GRID
+===================================================== */
+
+.location-grid{
+    max-width:1400px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:23px;
+}
+
+.location-card{
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,42,31,.96),
+            rgba(7,23,15,.96)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:21px;
+
+    box-shadow:
+        0 12px 40px
+        rgba(0,0,0,.18);
+
+    transition:
+        transform .35s,
+        border-color .35s,
+        box-shadow .35s;
+}
+
+.location-card:hover{
+    transform:translateY(-9px);
+
+    border-color:
+        rgba(57,232,121,.38);
+
+    box-shadow:
+        0 25px 60px
+        rgba(0,0,0,.34);
+}
+
+.destination-photo{
+    height:220px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    background:#173126;
+}
+
+.destination-photo::after{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(3,12,8,.70),
+            transparent 50%
+        );
+
+    pointer-events:none;
+}
+
+.destination-photo img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .7s ease,
+        filter .5s;
+}
+
+.location-card:hover
+.destination-photo img{
+    transform:scale(1.09);
+
+    filter:saturate(1.1);
+}
+
+.category-badge{
+    position:absolute;
+
+    z-index:2;
+
+    top:14px;
+    left:14px;
+
+    padding:7px 11px;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.66);
+
+    color:var(--yellow);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+.card-body{
+    padding:21px;
+}
+
+.card-body h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:24px;
+
+    line-height:1.2;
+}
+
+.location-state{
+    color:var(--green);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin:
+        5px 0 11px;
+}
+
+.card-body p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.65;
+}
+
+.tags{
+    display:flex;
+
+    gap:6px;
+
+    flex-wrap:wrap;
+
+    margin:16px 0;
+}
+
+.tag{
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    background:
+        rgba(57,232,121,.07);
+
+    color:var(--green2);
+
+    border:
+        1px solid
+        rgba(57,232,121,.12);
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.view-details-btn{
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #39e879,
+            #8df5ae
+        );
+
+    color:#04100a;
+
+    font-weight:900;
+
+    transition:.25s;
+}
+
+.view-details-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(57,232,121,.20);
+}
+
+
+/* =====================================================
+   SELECTED LOCATION
+===================================================== */
+
+.selected-location{
+    max-width:1400px;
+
+    margin:45px auto 0;
+
+    display:none;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,44,32,.98),
+            rgba(6,20,13,.98)
+        );
+
+    border:
+        1px solid
+        rgba(57,232,121,.27);
+
+    border-radius:25px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.35);
+}
+
+.selected-location.active{
+    display:block;
+
+    animation:
+        selectedIn .5s ease;
+}
+
+@keyframes selectedIn{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(25px)
+            scale(.98);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+.selected-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1.1fr;
+}
+
+.selected-image{
+    min-height:390px;
+
+    position:relative;
+}
+
+.selected-image::after{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(5,18,11,.35)
+        );
+}
+
+.selected-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.selected-info{
+    padding:38px;
+}
+
+.selected-info h2{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:42px;
+
+    line-height:1.1;
+
+    margin-top:13px;
+}
+
+.selected-meta{
+    color:var(--green);
+
+    font-weight:700;
+
+    margin:
+        8px 0 15px;
+}
+
+.selected-info p{
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+.detail-grid{
+    padding:28px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:14px;
+}
+
+.detail-box{
+    padding:21px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:.25s;
+}
+
+.detail-box:hover{
+    transform:translateY(-3px);
+
+    background:
+        rgba(57,232,121,.045);
+
+    border-color:
+        rgba(57,232,121,.18);
+}
+
+.detail-box h4{
+    color:var(--green);
+
+    margin-bottom:7px;
+}
+
+.detail-box p{
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.experience-section{
+    padding:
+        0 28px 25px;
+}
+
+.experience-section h3{
+    color:var(--yellow);
+
+    margin-bottom:12px;
+}
+
+.experience-list{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+}
+
+.experience-item{
+    padding:9px 12px;
+
+    border-radius:9px;
+
+    background:
+        rgba(255,215,90,.07);
+
+    border:
+        1px solid
+        rgba(255,215,90,.20);
+
+    color:#ffe99a;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.experience-item:hover{
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,215,90,.12);
+}
+
+.host-panel{
+    margin:
+        0 28px 28px;
+
+    padding:22px;
+
+    border-radius:16px;
+
+    background:
+        rgba(57,232,121,.055);
+
+    border:
+        1px solid
+        rgba(57,232,121,.22);
+}
+
+.host-panel h3{
+    color:var(--green);
+}
+
+.host-panel p{
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   OPERATION BUTTONS
+===================================================== */
+
+.operation-buttons{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:16px;
+}
+
+.operation-btn{
+    padding:11px 16px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:800;
+
+    transition:.25s;
+
+    box-shadow:
+        0 6px 15px
+        rgba(0,0,0,.15);
+}
+
+.operation-btn:hover{
+    transform:
+        translateY(-3px)
+        scale(1.02);
+}
+
+.call-btn{
+    background:#39e879;
+
+    color:#06140c;
+}
+
+.email-btn{
+    background:#61caff;
+
+    color:#03131c;
+}
+
+.map-btn{
+    background:#ffd45a;
+
+    color:#191300;
+}
+
+.book-btn{
+    background:white;
+
+    color:#08140e;
+}
+
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+.about-box{
+    max-width:1000px;
+
+    margin:auto;
+
+    padding:40px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,40,30,.82),
+            rgba(9,27,19,.75)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.20);
+}
+
+.about-box h3{
+    color:var(--green);
+
+    margin-bottom:7px;
+
+    font-family:"Space Grotesk",sans-serif;
+}
+
+.about-box p{
+    color:var(--muted);
+
+    margin-bottom:23px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    padding:45px 5%;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    border-top:
+        1px solid var(--border);
+
+    background:
+        rgba(2,10,7,.45);
+}
+
+footer h3{
+    color:var(--green);
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:22px;
+
+    margin-bottom:4px;
+}
+
+footer p{
+    font-size:13px;
+
+    margin-top:5px;
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+.modal,
+.payment-overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:2000;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(0,0,0,.78);
+
+    backdrop-filter:blur(12px);
+}
+
+.login-box,
+.payment-box{
+    width:min(620px,100%);
+
+    max-height:92vh;
+
+    overflow-y:auto;
+
+    padding:32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #122d21,
+            #091b13
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.55);
+
+    animation:
+        modalIn .35s ease;
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(25px)
+            scale(.96);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+.login-box{
+    width:min(430px,100%);
+}
+
+.close-modal{
+    float:right;
+
+    border:none;
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:white;
+
+    font-size:25px;
+
+    width:38px;
+    height:38px;
+
+    border-radius:10px;
+
+    transition:.2s;
+}
+
+.close-modal:hover{
+    background:
+        rgba(255,107,107,.15);
+
+    color:#ff8b8b;
+
+    transform:rotate(90deg);
+}
+
+.login-box h2,
+.payment-box h2{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:28px;
+}
+
+.login-box p{
+    color:var(--muted);
+
+    margin:
+        8px 0 20px;
+}
+
+.login-box input{
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:12px;
+
+    background:#07150e;
+
+    color:white;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    outline:none;
+
+    transition:.25s;
+}
+
+.login-box input:focus{
+    border-color:var(--green);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(57,232,121,.08);
+}
+
+.login-submit{
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #39e879,
+            #91f5af
+        );
+
+    color:#04100a;
+
+    font-weight:900;
+
+    transition:.25s;
+}
+
+.login-submit:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(57,232,121,.22);
+}
+
+
+/* =====================================================
+   BOOKING
+===================================================== */
+
+.booking-form{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:14px;
+
+    margin-top:20px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#dcebe1;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.booking-summary{
+    margin-top:20px;
+
+    padding:19px;
+
+    background:
+        rgba(4,17,11,.70);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:15px;
+}
+
+.summary-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:6px 0;
+
+    color:var(--muted);
+}
+
+.summary-row strong{
+    color:white;
+}
+
+.total-row{
+    margin-top:8px;
+
+    padding-top:12px;
+
+    border-top:
+        1px solid var(--border);
+}
+
+.total-row strong{
+    color:var(--green);
+
+    font-size:23px;
+}
+
+
+/* =====================================================
+   PAYMENT
+===================================================== */
+
+.payment-methods{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+
+    margin-top:18px;
+}
+
+.payment-method{
+    padding:13px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    background:#0a1b13;
+
+    color:white;
+
+    font-weight:800;
+
+    transition:.25s;
+}
+
+.payment-method:hover{
+    border-color:
+        rgba(57,232,121,.3);
+}
+
+.payment-method.active{
+    border-color:var(--green);
+
+    background:
+        rgba(57,232,121,.10);
+
+    color:var(--green2);
+
+    box-shadow:
+        0 0 20px
+        rgba(57,232,121,.08);
+}
+
+.upi-box{
+    margin-top:15px;
+
+    padding:21px;
+
+    background:#f2f8f3;
+
+    color:#14251b;
+
+    border-radius:15px;
+
+    text-align:center;
+}
+
+.upi-box h3{
+    color:#27763a;
+}
+
+.upi-id{
+    font-size:18px;
+
+    font-weight:900;
+
+    color:#1e6e37;
+
+    margin-top:5px;
+}
+
+.qr{
+    width:220px;
+    height:220px;
+
+    margin:15px auto;
+
+    padding:10px;
+
+    background:white;
+
+    border-radius:10px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.12);
+}
+
+.qr img{
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+}
+
+.scanner-name{
+    padding:11px;
+
+    border-radius:9px;
+
+    background:#e5f1e7;
+
+    color:#205d30;
+
+    font-weight:900;
+}
+
+.payment-note{
+    margin-top:10px;
+
+    color:#69756c;
+
+    font-size:11px;
+}
+
+.complete-payment{
+    width:100%;
+
+    margin-top:18px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #39e879,
+            #8df5ae
+        );
+
+    color:#06140c;
+
+    font-weight:900;
+
+    transition:.25s;
+}
+
+.complete-payment:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(57,232,121,.20);
+}
+
+.payment-error{
+    color:#d33b3b;
+
+    font-size:12px;
+
+    margin-top:8px;
+
+    display:none;
+}
+
+
+/* =====================================================
+   RECEIPT
+===================================================== */
+
+.receipt{
+    display:none;
+
+    margin-top:20px;
+
+    padding:27px;
+
+    background:#f4faf5;
+
+    color:#14251b;
+
+    border-radius:15px;
+}
+
+.receipt.active{
+    display:block;
+
+    animation:
+        modalIn .4s ease;
+}
+
+.receipt-icon{
+    font-size:45px;
+
+    text-align:center;
+}
+
+.receipt h2{
+    text-align:center;
+
+    color:#28763c;
+
+    font-family:"Space Grotesk",sans-serif;
+}
+
+.receipt-subtitle{
+    text-align:center;
+
+    color:#69756c;
+
+    font-size:13px;
+}
+
+.receipt-number{
+    margin:18px 0;
+
+    padding:12px;
+
+    background:#e5f2e7;
+
+    color:#226534;
+
+    text-align:center;
+
+    border-radius:9px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.receipt-details{
+    margin-top:15px;
+
+    border-top:
+        1px solid #dce6dd;
+}
+
+.receipt-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:8px 0;
+
+    border-bottom:
+        1px solid #e3ebe4;
+
+    font-size:13px;
+}
+
+.receipt-row span:first-child{
+    color:#667269;
+}
+
+.receipt-row span:last-child{
+    color:#17261c;
+
+    font-weight:800;
+
+    text-align:right;
+}
+
+.download-btn{
+    width:100%;
+
+    margin-top:15px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#27763a;
+
+    color:white;
+
+    font-weight:900;
+
+    transition:.25s;
+}
+
+.download-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 20px
+        rgba(39,118,58,.22);
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+    width:9px;
+}
+
+::-webkit-scrollbar-track{
+    background:#06110d;
+}
+
+::-webkit-scrollbar-thumb{
+    background:
+        linear-gradient(
+            #1c7041,
+            #39e879
+        );
+
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#7af5a0;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1100px){
+
+    .hero{
+        grid-template-columns:1fr;
+
+        gap:45px;
+    }
+
+    .canvas-card{
+        max-width:850px;
+
+        width:100%;
+
+        margin:auto;
+    }
+
+    .location-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .selected-grid{
+        grid-template-columns:1fr;
+    }
+
+    .selected-image{
+        min-height:320px;
+    }
+}
+
+
+@media(max-width:750px){
+
+    .navbar{
+        padding:
+            10px 4%;
+
+        min-height:68px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .logo-icon{
+        width:38px;
+        height:38px;
+    }
+
+    .profile-avatar{
+        display:none;
+    }
+
+    #profileName{
+        display:none;
+    }
+
+    .login-btn{
+        padding:
+            9px 12px;
+
+        font-size:12px;
+    }
+
+    .hero{
+        padding:
+            60px 5%;
+    }
+
+    .hero h1{
+        font-size:46px;
+
+        letter-spacing:-1.5px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .canvas-card{
+        min-height:320px;
+    }
+
+    #villageCanvas{
+        height:320px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+
+        padding:
+            0 5% 55px;
+    }
+
+    .location-grid{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+
+        padding:11px;
+    }
+
+    .section{
+        padding:
+            60px 5%;
+    }
+
+    .section-heading h2,
+    .section-title h2{
+        font-size:33px;
+    }
+
+    .selected-info{
+        padding:27px;
+    }
+
+    .selected-info h2{
+        font-size:33px;
+    }
+
+    .detail-grid{
+        grid-template-columns:1fr;
+
+        padding:20px;
+    }
+
+    .experience-section{
+        padding:
+            0 20px 20px;
+    }
+
+    .host-panel{
+        margin:
+            0 20px 20px;
+    }
+
+    .booking-form{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .payment-methods{
+        grid-template-columns:1fr;
+    }
+
+    .login-box,
+    .payment-box{
+        padding:22px;
+    }
+
+    .qr{
+        width:190px;
+        height:190px;
+    }
+
+}
+
+
+/* =====================================================
+   EXTRA SMALL DEVICES
+===================================================== */
+
+@media(max-width:450px){
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+    }
+
+    .hero-actions button{
+        width:100%;
+    }
+
+    .operation-buttons{
+        flex-direction:column;
+    }
+
+    .operation-btn{
+        width:100%;
+    }
+
+    .selected-image{
+        min-height:250px;
+    }
+
+    .about-box{
+        padding:25px;
+    }
+
+    .canvas-content{
+        left:12px;
+        right:12px;
+        bottom:12px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌾
+        </div>
+
+        ExploreMyVillage
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#locations">
+            Explore
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+    </div>
+
+
+    <div class="profile">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <span id="profileName"></span>
+
+        <button
+            class="login-btn"
+            id="loginButton">
+
+            Login
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<header class="hero" id="home">
+
+    <div>
+
+        <div class="badge">
+            ● SUSTAINABLE RURAL TOURISM NETWORK
+        </div>
+
+
+        <h1>
+
+            Discover India's
+            <span>
+                Living Villages.
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Explore rural destinations, local businesses,
+            artisans, traditional food, culture and authentic
+            experiences while supporting sustainable local economies.
+
+        </p>
+
+
+        <div class="hero-actions">
+
+            <button
+                class="primary-btn"
+                onclick="
+                document
+                .getElementById('locations')
+                .scrollIntoView();
+                ">
+
+                Explore Destinations →
+
+            </button>
+
+
+            <button
+                class="secondary-btn"
+                onclick="openLogin()">
+
+                Create Profile
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="canvas-card">
+
+        <canvas
+            id="villageCanvas">
+        </canvas>
+
+
+        <div class="canvas-content">
+
+            <small>
+                LIVE RURAL NETWORK
+            </small>
+
+            <h3>
+                India Village Grid
+            </h3>
+
+            <p>
+
+                Explore destinations, discover local
+                experiences and make a direct booking.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="stats">
+
+    <div class="stat-card">
+
+        <small>
+            DESTINATIONS
+        </small>
+
+        <strong id="locationCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            STATES
+        </small>
+
+        <strong id="stateCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            LOCAL BUSINESSES
+        </small>
+
+        <strong id="businessCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            EXPERIENCES
+        </small>
+
+        <strong id="experienceCount">
+            0
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     LOCATIONS
+===================================================== -->
+
+<section
+    class="section"
+    id="locations">
+
+
+    <div class="section-title">
+
+        <small>
+            EXPLORE INDIA
+        </small>
+
+        <h2>
+            Rural Destinations
+        </h2>
+
+        <p>
+
+            Select any destination to view local businesses,
+            artisans, food, culture, experiences and booking options.
+
+        </p>
+
+    </div>
+
+
+    <div class="filters">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search destination, food, culture..."
+        >
+
+
+        <select id="stateFilter">
+
+            <option value="all">
+                All States
+            </option>
+
+        </select>
+
+
+        <select id="categoryFilter">
+
+            <option value="all">
+                All Categories
+            </option>
+
+            <option value="Coastal">
+                Coastal
+            </option>
+
+            <option value="Hill">
+                Hill
+            </option>
+
+            <option value="Heritage">
+                Heritage
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="locationGrid"
+        class="location-grid">
+    </div>
+
+
+    <div
+        id="selectedLocation"
+        class="selected-location">
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section
+    class="section"
+    id="about">
+
+    <div class="section-heading">
+
+        <small>
+            ABOUT EXPLOREMYVILLAGE
+        </small>
+
+        <h2>
+            Travel that strengthens communities.
+        </h2>
+
+        <p>
+
+            ExploreMyVillage connects responsible travelers
+            with rural destinations and local economic opportunities.
+
+        </p>
+
+    </div>
+
+
+    <div class="about-box">
+
+        <h3>
+            🌱 Our Vision
+        </h3>
+
+        <p>
+
+            Make rural tourism accessible, responsible and
+            economically meaningful for local communities.
+
+        </p>
+
+
+        <h3>
+            🤝 Our Mission
+        </h3>
+
+        <p>
+
+            Connect visitors directly with rural hosts,
+            farmers, artisans, guides and local businesses.
+
+        </p>
+
+
+        <h3>
+            🎨 Local Culture
+        </h3>
+
+        <p>
+
+            Discover traditional food, handicrafts, village
+            traditions and authentic community experiences.
+
+        </p>
+
+
+        <h3>
+            💰 Local Economy
+        </h3>
+
+        <p>
+
+            Tourism creates additional income opportunities
+            for homestays, artisans, farmers, guides and
+            small businesses.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <h3>
+        ExploreMyVillage 🌱
+    </h3>
+
+    <p>
+        Sustainable tourism • Local economy • Rural communities
+    </p>
+
+    <p>
+        © 2026 ExploreMyVillage
+    </p>
+
+</footer>
+
+
+<!-- =====================================================
+     LOGIN MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="loginModal">
+
+    <div class="login-box">
+
+        <button
+            class="close-modal"
+            onclick="closeLogin()">
+
+            ×
+
+        </button>
+
+
+        <h2>
+            Welcome Explorer
+        </h2>
+
+
+        <p>
+            Enter your details to create your booking profile.
+        </p>
+
+
+        <input
+            type="text"
+            id="loginName"
+            placeholder="Your name"
+            maxlength="30"
+        >
+
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email address"
+        >
+
+
+        <button
+            class="login-submit"
+            onclick="loginUser()">
+
+            Enter ExploreMyVillage
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BOOKING / PAYMENT
+===================================================== -->
+
+<div
+    class="payment-overlay"
+    id="bookingOverlay">
+
+    <div class="payment-box">
+
+        <button
+            class="close-modal"
+            onclick="closeBooking()">
+
+            ×
+
+        </button>
+
+
+        <h2>
+            Book Your Rural Experience
+        </h2>
+
+
+        <p
+            id="bookingDestination"
+            style="
+            color:#9db2a5;
+            margin-top:5px;">
+        </p>
+
+
+        <!-- BOOKING FORM -->
+
+        <div id="bookingFormArea">
+
+            <div class="booking-form">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Visitor Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="bookingName"
+                        placeholder="Enter your name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="bookingEmail"
+                        placeholder="Enter email">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Visit Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="bookingDate">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Number of Visitors
+                    </label>
+
+                    <select
+                        id="bookingGuests"
+                        onchange="updateBookingTotal()">
+
+                        <option value="1">
+                            1 Visitor
+                        </option>
+
+                        <option value="2">
+                            2 Visitors
+                        </option>
+
+                        <option value="3">
+                            3 Visitors
+                        </option>
+
+                        <option value="4">
+                            4 Visitors
+                        </option>
+
+                        <option value="5">
+                            5 Visitors
+                        </option>
+
+                        <option value="6">
+                            6 Visitors
+                        </option>
+
+                        <option value="7">
+                            7 Visitors
+                        </option>
+
+                        <option value="8">
+                            8 Visitors
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Select Experience
+                    </label>
+
+                    <select
+                        id="bookingExperience">
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="booking-summary">
+
+                <div class="summary-row">
+
+                    <span>
+                        Experience price
+                    </span>
+
+                    <strong>
+                        ₹999 / visitor
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Visitors
+                    </span>
+
+                    <strong id="summaryGuests">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row total-row">
+
+                    <span>
+                        Total Booking Amount
+                    </span>
+
+                    <strong id="bookingTotal">
+                        ₹999
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="complete-payment"
+                onclick="continueToPayment()">
+
+                Continue to Payment →
+
+            </button>
+
+        </div>
+
+
+        <!-- PAYMENT -->
+
+        <div
+            id="paymentArea"
+            style="display:none;">
+
+            <div
+                style="
+                margin-top:20px;
+                padding:15px;
+                background:#edf6eb;
+                color:#14251b;
+                border-radius:13px;">
+
+                <strong>
+                    Experience Booking Amount
+                </strong>
+
+                <div
+                    id="paymentAmount"
+                    style="
+                    font-size:28px;
+                    color:#27763a;
+                    font-weight:900;
+                    margin-top:5px;">
+
+                    ₹999
+
+                </div>
+
+            </div>
+
+
+            <div class="payment-methods">
+
+                <button
+                    class="payment-method active"
+                    onclick="selectPaymentMethod('upi',this)">
+
+                    📱 UPI ID
+
+                </button>
+
+
+                <button
+                    class="payment-method"
+                    onclick="selectPaymentMethod('scanner',this)">
+
+                    ▣ Scan QR
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="upiPayment"
+                class="upi-box">
+
+                <h3>
+                    Pay using UPI
+                </h3>
+
+                <p style="margin-top:8px;">
+                    Pay to
+                </p>
+
+                <div class="upi-id">
+                    exploremyvillage@upi
+                </div>
+
+                <p
+                    style="
+                    margin-top:10px;
+                    font-size:12px;
+                    color:#68756b;">
+
+                    Account Holder:
+                    <strong>
+                        ExploreMyVillage Community
+                    </strong>
+
+                </p>
+
+            </div>
+
+
+            <div
+                id="scannerPayment"
+                class="upi-box"
+                style="display:none;">
+
+                <h3>
+                    Scan & Pay
+                </h3>
+
+
+                <div class="qr">
+
+                    <img
+                        id="qrImage"
+                        alt="UPI QR Code">
+
+                </div>
+
+
+                <div class="scanner-name">
+
+                    👤 QR Owner / Scanner Name:
+                    <br>
+
+                    <strong>
+                        ExploreMyVillage Community
+                    </strong>
+
+                </div>
+
+
+                <p class="payment-note">
+
+                    Scan this QR using your UPI application.
+                    Verify the receiver name before making payment.
+
+                </p>
+
+            </div>
+
+
+            <div
+                id="paymentError"
+                class="payment-error">
+
+                Please complete the booking details first.
+
+            </div>
+
+
+            <button
+                class="complete-payment"
+                onclick="processPayment()">
+
+                ✓ I Have Completed Payment
+
+            </button>
+
+
+            <button
+                class="secondary-btn"
+                style="
+                width:100%;
+                margin-top:10px;"
+                onclick="backToBooking()">
+
+                ← Back to Booking
+
+            </button>
+
+
+            <p class="payment-note">
+
+                Demo payment interface.
+                Real payment verification requires a payment
+                gateway and backend server.
+
+            </p>
+
+        </div>
+
+
+        <!-- RECEIPT -->
+
+        <div
+            id="receipt"
+            class="receipt">
+
+            <div class="receipt-icon">
+                ✅
+            </div>
+
+            <h2>
+                Booking Confirmed
+            </h2>
+
+            <p class="receipt-subtitle">
+
+                Payment recorded successfully.
+                Your rural experience is booked.
+
+            </p>
+
+
+            <div
+                id="receiptNumber"
+                class="receipt-number">
+            </div>
+
+
+            <div class="receipt-details">
+
+                <div class="receipt-row">
+                    <span>Visitor</span>
+                    <span id="receiptUser"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Email</span>
+                    <span id="receiptEmail"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Destination</span>
+                    <span id="receiptVillage"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Experience</span>
+                    <span id="receiptExperience"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Visit Date</span>
+                    <span id="receiptDate"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Visitors</span>
+                    <span id="receiptGuests"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Payment</span>
+                    <span>UPI / QR</span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Scanner / Owner</span>
+                    <span>
+                        ExploreMyVillage Community
+                    </span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Total Paid</span>
+                    <span id="receiptAmount"></span>
+                </div>
+
+                <div class="receipt-row">
+                    <span>Status</span>
+
+                    <span style="color:#28763c;">
+                        ✓ CONFIRMED
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="download-btn"
+                onclick="printBooking()">
+
+                🖨️ Print / Save Booking
+
+            </button>
+
+
+            <button
+                class="secondary-btn"
+                style="
+                width:100%;
+                margin-top:10px;
+                color:#14251b;
+                background:#dcebdd;"
+                onclick="closeBooking()">
+
+                Done
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DESTINATION DATA
+===================================================== */
+
+const destinations = [
+
+{
+    name:"Tarkarli Beach",
+    state:"Maharashtra",
+    category:"Coastal",
+    emoji:"🏖️",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/Tarkarli%20Beach.JPG",
+
+    description:
+    "A peaceful Konkan coastal destination known for clear waters, beaches, fishing villages and Malvani culture.",
+
+    localEconomy:
+    "Homestays, fishing communities, boat operators, local guides and small tourism businesses support the local economy.",
+
+    artisans:
+    "Coconut crafts, Konkan handmade products and traditional souvenirs.",
+
+    food:
+    "Malvani seafood, sol kadhi, bhakri, fish curry and coconut-based dishes.",
+
+    culture:
+    "Konkan village traditions, fishing culture, local festivals and Malvani heritage.",
+
+    experiences:[
+        "Scuba Diving",
+        "Snorkelling",
+        "Dolphin Watching",
+        "Kayaking",
+        "Fishing Village Visit",
+        "Malvani Food"
+    ],
+
+    tags:[
+        "Beach",
+        "Malvani",
+        "Scuba",
+        "Fishing"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Tarkarli Beach, Maharashtra"
+},
+
+
+{
+    name:"Amboli",
+    state:"Maharashtra",
+    category:"Hill",
+    emoji:"🌧️",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Amboli%20Waterfalls.jpg",
+
+    description:
+    "A lush Western Ghats destination famous for waterfalls, forests, biodiversity and peaceful village landscapes.",
+
+    localEconomy:
+    "Homestays, food stalls, nature guides, transport services and village businesses benefit from tourism.",
+
+    artisans:
+    "Local handmade products, bamboo crafts and village products.",
+
+    food:
+    "Maharashtrian village meals, bhakri, pithla, local vegetables and snacks.",
+
+    culture:
+    "Traditional village life surrounded by Western Ghats biodiversity.",
+
+    experiences:[
+        "Waterfall Trek",
+        "Forest Walk",
+        "Bird Watching",
+        "Monsoon Photography",
+        "Village Stay"
+    ],
+
+    tags:[
+        "Western Ghats",
+        "Waterfalls",
+        "Nature",
+        "Monsoon"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Amboli, Maharashtra"
+},
+
+
+{
+    name:"Sindhudurg Fort",
+    state:"Maharashtra",
+    category:"Heritage",
+    emoji:"🏰",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Sindhudurg%20fort%20%2C%20sindhudurg.jpg",
+
+    description:
+    "A historic sea fort representing the maritime heritage of the Konkan region.",
+
+    localEconomy:
+    "Boat operators, local guides, restaurants, homestays and souvenir sellers support tourism.",
+
+    artisans:
+    "Konkan handicrafts, coconut products and traditional decorative items.",
+
+    food:
+    "Malvani fish curry, seafood, sol kadhi and traditional Konkan meals.",
+
+    culture:
+    "Maratha maritime history, coastal traditions and Konkan culture.",
+
+    experiences:[
+        "Fort Tour",
+        "Boat Ride",
+        "Heritage Walk",
+        "Photography",
+        "Local Food Tour"
+    ],
+
+    tags:[
+        "Fort",
+        "History",
+        "Konkan",
+        "Heritage"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Sindhudurg Fort, Maharashtra"
+},
+
+
+{
+    name:"Mahabaleshwar",
+    state:"Maharashtra",
+    category:"Hill",
+    emoji:"🍓",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Mahabaleshwar%20trip.jpg",
+
+    description:
+    "A scenic Western Ghats destination known for strawberry farms, viewpoints, forests and local village experiences.",
+
+    localEconomy:
+    "Farm tourism, homestays, hotels, fruit sellers, transport and local markets generate rural income.",
+
+    artisans:
+    "Handmade baskets, farm products, wooden items and local souvenirs.",
+
+    food:
+    "Fresh strawberries, strawberry cream, corn, Maharashtrian food and farm products.",
+
+    culture:
+    "Hill-station traditions, farming communities and local market culture.",
+
+    experiences:[
+        "Strawberry Farm Visit",
+        "Village Walk",
+        "Nature Trek",
+        "Sunrise View",
+        "Local Market"
+    ],
+
+    tags:[
+        "Strawberry",
+        "Hills",
+        "Farms",
+        "Nature"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Mahabaleshwar, Maharashtra"
+},
+
+
+{
+    name:"Ganpatipule",
+    state:"Maharashtra",
+    category:"Coastal",
+    emoji:"🌊",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ganpatipule.jpg",
+
+    description:
+    "A Konkan coastal village combining beaches, temple heritage, local food and traditional village experiences.",
+
+    localEconomy:
+    "Homestays, restaurants, fishing, handicrafts and small tourism operators support residents.",
+
+    artisans:
+    "Coconut crafts, local decorative items and traditional Konkan products.",
+
+    food:
+    "Konkani seafood, modak, sol kadhi, bhakri and coconut-based dishes.",
+
+    culture:
+    "Temple traditions, Konkan village life and coastal festivals.",
+
+    experiences:[
+        "Beach Walk",
+        "Temple Visit",
+        "Village Tour",
+        "Boat Ride",
+        "Local Food Experience"
+    ],
+
+    tags:[
+        "Beach",
+        "Temple",
+        "Konkan",
+        "Food"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Ganpatipule, Maharashtra"
+},
+
+
+{
+    name:"Ajanta Caves",
+    state:"Maharashtra",
+    category:"Heritage",
+    emoji:"🪨",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta%20caves%20full%20view.jpg",
+
+    description:
+    "Ancient rock-cut Buddhist caves celebrated for paintings, sculptures and historic heritage.",
+
+    localEconomy:
+    "Local guides, transport providers, food businesses, accommodation and souvenir sellers benefit from visitors.",
+
+    artisans:
+    "Heritage-inspired paintings, crafts and locally produced souvenirs.",
+
+    food:
+    "Maharashtrian meals, local snacks, bhakri and traditional sweets.",
+
+    culture:
+    "Ancient Buddhist art, Indian heritage and traditional artistic techniques.",
+
+    experiences:[
+        "Heritage Walk",
+        "Cave Exploration",
+        "Local Guide Tour",
+        "Art Appreciation",
+        "Photography"
+    ],
+
+    tags:[
+        "Caves",
+        "Art",
+        "History",
+        "Heritage"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Ajanta Caves, Maharashtra"
+},
+
+
+{
+    name:"Ellora Caves",
+    state:"Maharashtra",
+    category:"Heritage",
+    emoji:"⛰️",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ellora%20Caves%2C%20India.jpg",
+
+    description:
+    "A remarkable rock-cut heritage complex representing Buddhist, Hindu and Jain traditions.",
+
+    localEconomy:
+    "Guides, transport, local restaurants, accommodation and handicraft sellers support the surrounding economy.",
+
+    artisans:
+    "Stone-inspired handicrafts, paintings and traditional souvenirs.",
+
+    food:
+    "Maharashtrian cuisine, local snacks, thali meals and sweets.",
+
+    culture:
+    "Indian religious diversity, rock-cut architecture and ancient artistic traditions.",
+
+    experiences:[
+        "Cave Tour",
+        "Architecture Study",
+        "Heritage Walk",
+        "Photography",
+        "Local Craft Shopping"
+    ],
+
+    tags:[
+        "Caves",
+        "Architecture",
+        "Heritage",
+        "Art"
+    ],
+
+    phone:"+919403878864",
+
+    email:
+    "diot@maharashtratourism.gov.in",
+
+    map:
+    "Ellora Caves, Maharashtra"
+},
+
+
+{
+    name:"Munnar",
+    state:"Kerala",
+    category:"Hill",
+    emoji:"🍃",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Munnar_.jpg",
+
+    description:
+    "A beautiful highland destination surrounded by tea plantations, forests, spice gardens and rural communities.",
+
+    localEconomy:
+    "Tea estates, homestays, local guides, spice farms, restaurants and village businesses support livelihoods.",
+
+    artisans:
+    "Handmade tea products, spices, bamboo crafts and local handmade goods.",
+
+    food:
+    "Kerala cuisine, appam, stew, puttu, spices and traditional snacks.",
+
+    culture:
+    "Kerala village traditions, tea-growing communities and plantation culture.",
+
+    experiences:[
+        "Tea Plantation Visit",
+        "Tea Tasting",
+        "Spice Garden Tour",
+        "Nature Walk",
+        "Village Experience"
+    ],
+
+    tags:[
+        "Tea",
+        "Kerala",
+        "Hills",
+        "Spices"
+    ],
+
+    phone:"1363",
+
+    email:
+    "info.mot@gov.in",
+
+    map:
+    "Munnar, Kerala"
+},
+
+
+{
+    name:"Hampi",
+    state:"Karnataka",
+    category:"Heritage",
+    emoji:"🏛️",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hampi%20karnataka.jpg",
+
+    description:
+    "A historic landscape of temples, ruins, villages and boulder formations connected with Vijayanagara heritage.",
+
+    localEconomy:
+    "Local guides, homestays, bicycle rentals, food businesses, transport and craft sellers support tourism.",
+
+    artisans:
+    "Traditional crafts, stone-inspired products, textiles and handmade souvenirs.",
+
+    food:
+    "Karnataka cuisine, dosa, idli, local thali and traditional snacks.",
+
+    culture:
+    "Vijayanagara heritage, temple traditions and rural Karnataka culture.",
+
+    experiences:[
+        "Heritage Cycling",
+        "Temple Tour",
+        "Village Walk",
+        "Sunset View",
+        "Local Craft Experience"
+    ],
+
+    tags:[
+        "History",
+        "Temples",
+        "Cycling",
+        "Heritage"
+    ],
+
+    phone:"1363",
+
+    email:
+    "info.mot@gov.in",
+
+    map:
+    "Hampi, Karnataka"
+},
+
+
+{
+    name:"Goa",
+    state:"Goa",
+    category:"Coastal",
+    emoji:"🌴",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Goa%20beaches.jpg",
+
+    description:
+    "Beyond beaches, Goa offers rural villages, fishing communities, traditional food and local cultural experiences.",
+
+    localEconomy:
+    "Homestays, fishing, local restaurants, markets, guides, transport and village businesses support communities.",
+
+    artisans:
+    "Handicrafts, pottery, coconut products, textiles and local handmade souvenirs.",
+
+    food:
+    "Goan fish curry, poi, vindaloo, traditional sweets and coastal cuisine.",
+
+    culture:
+    "Goan village traditions, music, Portuguese-influenced heritage and coastal life.",
+
+    experiences:[
+        "Village Walk",
+        "Fishing Experience",
+        "Local Food Tour",
+        "Heritage Walk",
+        "Handicraft Shopping"
+    ],
+
+    tags:[
+        "Beach",
+        "Village",
+        "Food",
+        "Culture"
+    ],
+
+    phone:"1363",
+
+    email:
+    "info.mot@gov.in",
+
+    map:
+    "Goa, India"
+},
+
+
+{
+    name:"Taj Mahal (Agra)",
+    state:"Uttar Pradesh",
+    category:"Heritage",
+    emoji:"🕌",
+
+    image:
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal.jpg",
+
+    description:
+    "One of India's most iconic heritage destinations, surrounded by traditional crafts, food and local tourism businesses.",
+
+    localEconomy:
+    "Guides, transport, hotels, restaurants, handicraft shops and local tourism services support the Agra economy.",
+
+    artisans:
+    "Marble inlay, leather goods, carpets, textiles and traditional handicrafts.",
+
+    food:
+    "Agra petha, Mughlai cuisine, paratha and traditional North Indian food.",
+
+    culture:
+    "Mughal heritage, architecture, traditional crafts and local Agra culture.",
+
+    experiences:[
+        "Heritage Tour",
+        "Architecture Walk",
+        "Marble Craft Experience",
+        "Local Food Tour",
+        "Traditional Market"
+    ],
+
+    tags:[
+        "Taj Mahal",
+        "Mughal",
+        "Crafts",
+        "Food"
+    ],
+
+    phone:"1363",
+
+    email:
+    "info.mot@gov.in",
+
+    map:
+    "Taj Mahal, Agra, Uttar Pradesh"
+}
+
+];
+
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let selectedLocation = null;
+
+const PRICE_PER_PERSON = 999;
+
+let bookingData = null;
+
+
+/* =====================================================
+   LOAD STATES
+===================================================== */
+
+function loadStates(){
+
+    const stateFilter =
+        document.getElementById("stateFilter");
+
+    const states = [
+        ...new Set(
+            destinations.map(
+                destination =>
+                destination.state
+            )
+        )
+    ].sort();
+
+    states.forEach(state => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = state;
+
+        option.textContent = state;
+
+        stateFilter.appendChild(option);
+
+    });
+
+}
+
+
+/* =====================================================
+   RENDER LOCATIONS
+===================================================== */
+
+function renderLocations(){
+
+    const grid =
+        document.getElementById(
+            "locationGrid"
+        );
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+    const state =
+        document.getElementById(
+            "stateFilter"
+        ).value;
+
+    const category =
+        document.getElementById(
+            "categoryFilter"
+        ).value;
+
+
+    const filtered =
+        destinations.filter(
+            destination => {
+
+                const searchableText = (
+
+                    destination.name + " " +
+                    destination.state + " " +
+                    destination.description + " " +
+                    destination.localEconomy + " " +
+                    destination.artisans + " " +
+                    destination.food + " " +
+                    destination.culture + " " +
+                    destination.tags.join(" ")
+
+                ).toLowerCase();
+
+
+                return (
+
+                    searchableText.includes(
+                        search
+                    )
+
+                    &&
+
+                    (
+                        state === "all" ||
+                        destination.state === state
+                    )
+
+                    &&
+
+                    (
+                        category === "all" ||
+                        destination.category === category
+                    )
+
+                );
+
+            }
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        grid.innerHTML = `
+
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:60px;
+                color:#9db2a5;
+                background:rgba(255,255,255,.025);
+                border:1px solid rgba(255,255,255,.08);
+                border-radius:20px;">
+
+                <div style="
+                    font-size:45px;
+                    margin-bottom:10px;">
+                    🔍
+                </div>
+
+                <h3>
+                    No destinations found
+                </h3>
+
+                <p>
+                    Try another search or filter.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    filtered.forEach(destination => {
+
+        const index =
+            destinations.indexOf(
+                destination
+            );
+
+
+        grid.innerHTML += `
+
+            <article class="location-card">
+
+                <div class="destination-photo">
+
+                    <img
+                        src="${destination.image}"
+                        alt="${destination.name}"
+                        loading="lazy"
+                        onerror="this.style.display='none'"
+                    >
+
+                    <span class="category-badge">
+
+                        ${destination.emoji}
+                        ${destination.category}
+
+                    </span>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <h3>
+                        ${destination.name}
+                    </h3>
+
+                    <div class="location-state">
+
+                        📍 ${destination.state}
+
+                    </div>
+
+                    <p>
+                        ${destination.description}
+                    </p>
+
+
+                    <div class="tags">
+
+                        ${destination.tags.map(
+                            tag => `
+
+                            <span class="tag">
+                                ${tag}
+                            </span>
+
+                        `
+                        ).join("")}
+
+                    </div>
+
+
+                    <button
+                        class="view-details-btn"
+                        onclick="selectLocation(${index})">
+
+                        View Details →
+
+                    </button>
+
+                </div>
+
+            </article>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   SELECT LOCATION
+===================================================== */
+
+function selectLocation(index){
+
+    selectedLocation =
+        destinations[index];
+
+    const box =
+        document.getElementById(
+            "selectedLocation"
+        );
+
+
+    box.classList.add("active");
+
+
+    box.innerHTML = `
+
+        <div class="selected-grid">
+
+            <div class="selected-image">
+
+                <img
+                    src="${selectedLocation.image}"
+                    alt="${selectedLocation.name}"
+                >
+
+            </div>
+
+
+            <div class="selected-info">
+
+                <div class="badge">
+
+                    ${selectedLocation.emoji}
+                    ${selectedLocation.category}
+
+                </div>
+
+
+                <h2>
+                    ${selectedLocation.name}
+                </h2>
+
+
+                <div class="selected-meta">
+
+                    📍 ${selectedLocation.state}
+
+                </div>
+
+
+                <p>
+                    ${selectedLocation.description}
+                </p>
+
+
+                <div class="operation-buttons">
+
+                    <button
+                        class="operation-btn call-btn"
+                        onclick="callLocation()">
+
+                        📞 Call Host
+
+                    </button>
+
+
+                    <button
+                        class="operation-btn email-btn"
+                        onclick="emailLocation()">
+
+                        ✉️ Email Host
+
+                    </button>
+
+
+                    <button
+                        class="operation-btn map-btn"
+                        onclick="navigateLocation()">
+
+                        🗺️ Navigate
+
+                    </button>
+
+
+                    <button
+                        class="operation-btn book-btn"
+                        onclick="openBooking()">
+
+                        🎫 Book Experience
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-grid">
+
+            <div class="detail-box">
+
+                <h4>
+                    🏪 Local Businesses
+                </h4>
+
+                <p>
+                    ${selectedLocation.localEconomy}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <h4>
+                    🎨 Artisans & Crafts
+                </h4>
+
+                <p>
+                    ${selectedLocation.artisans}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <h4>
+                    🍛 Local Food
+                </h4>
+
+                <p>
+                    ${selectedLocation.food}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <h4>
+                    🎭 Culture
+                </h4>
+
+                <p>
+                    ${selectedLocation.culture}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="experience-section">
+
+            <h3>
+                ⭐ Available Experiences
+            </h3>
+
+
+            <div class="experience-list">
+
+                ${selectedLocation.experiences.map(
+                    experience => `
+
+                    <div class="experience-item">
+
+                        ${experience}
+
+                    </div>
+
+                `
+                ).join("")}
+
+            </div>
+
+        </div>
+
+
+        <div class="host-panel">
+
+            <h3>
+                📞 Location Information Host
+            </h3>
+
+            <p>
+
+                Contact the tourism information desk
+                for additional information about this destination.
+
+            </p>
+
+
+            <div class="operation-buttons">
+
+                <button
+                    class="operation-btn call-btn"
+                    onclick="callLocation()">
+
+                    📞 Call
+
+                </button>
+
+
+                <button
+                    class="operation-btn email-btn"
+                    onclick="emailLocation()">
+
+                    ✉️ Email
+
+                </button>
+
+
+                <button
+                    class="operation-btn map-btn"
+                    onclick="navigateLocation()">
+
+                    🗺️ Open Google Maps
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    box.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* =====================================================
+   CALL
+===================================================== */
+
+function callLocation(){
+
+    if(!selectedLocation){
+
+        alert(
+            "Please select a destination first."
+        );
+
+        return;
+    }
+
+
+    if(!selectedLocation.phone){
+
+        alert(
+            "Phone number is not available for this destination."
+        );
+
+        return;
+    }
+
+
+    window.location.href =
+        "tel:" +
+        selectedLocation.phone;
+
+}
+
+
+/* =====================================================
+   EMAIL
+===================================================== */
+
+function emailLocation(){
+
+    if(!selectedLocation){
+
+        alert(
+            "Please select a destination first."
+        );
+
+        return;
+    }
+
+
+    if(!selectedLocation.email){
+
+        alert(
+            "Email address is not available."
+        );
+
+        return;
+    }
+
+
+    const subject =
+        encodeURIComponent(
+            "ExploreMyVillage Information - " +
+            selectedLocation.name
+        );
+
+
+    const body =
+        encodeURIComponent(
+
+            "Hello,\n\n" +
+
+            "I would like additional information about " +
+
+            selectedLocation.name +
+
+            " through ExploreMyVillage.\n\n" +
+
+            "Thank you."
+
+        );
+
+
+    window.location.href =
+        "mailto:" +
+        selectedLocation.email +
+        "?subject=" +
+        subject +
+        "&body=" +
+        body;
+
+}
+
+
+/* =====================================================
+   GOOGLE MAP
+===================================================== */
+
+function navigateLocation(){
+
+    if(!selectedLocation){
+
+        alert(
+            "Please select a destination first."
+        );
+
+        return;
+    }
+
+
+    const mapURL =
+        "https://www.google.com/maps/search/?api=1&query=" +
+
+        encodeURIComponent(
+            selectedLocation.map
+        );
+
+
+    window.open(
+        mapURL,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function openLogin(){
+
+    document.getElementById(
+        "loginModal"
+    ).style.display = "flex";
+
+}
+
+
+function closeLogin(){
+
+    document.getElementById(
+        "loginModal"
+    ).style.display = "none";
+
+}
+
+
+function loginUser(){
+
+    const name =
+        document.getElementById(
+            "loginName"
+        )
+        .value
+        .trim();
+
+
+    const email =
+        document.getElementById(
+            "loginEmail"
+        )
+        .value
+        .trim();
+
+
+    if(!name){
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+    }
+
+
+    if(!email){
+
+        alert(
+            "Please enter your email."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "exploreUserName",
+        name
+    );
+
+
+    localStorage.setItem(
+        "exploreUserEmail",
+        email
+    );
+
+
+    updateProfile();
+
+    closeLogin();
+
+}
+
+
+function updateProfile(){
+
+    const name =
+        localStorage.getItem(
+            "exploreUserName"
+        );
+
+
+    const profileName =
+        document.getElementById(
+            "profileName"
+        );
+
+
+    if(name){
+
+        profileName.textContent =
+            "👋 " + name;
+
+
+        document.getElementById(
+            "loginButton"
+        ).textContent =
+            "Profile";
+
+
+        document.getElementById(
+            "loginButton"
+        ).onclick =
+        function(){
+
+            alert(
+                "Logged in as " +
+                name
+            );
+
+        };
+
+    }
+
+}
+
+
+/* =====================================================
+   OPEN BOOKING
+===================================================== */
+
+function openBooking(){
+
+    if(!selectedLocation){
+
+        alert(
+            "Please select a destination first."
+        );
+
+        return;
+    }
+
+
+    const savedName =
+        localStorage.getItem(
+            "exploreUserName"
+        );
+
+
+    const savedEmail =
+        localStorage.getItem(
+            "exploreUserEmail"
+        );
+
+
+    document.getElementById(
+        "bookingOverlay"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "bookingDestination"
+    ).textContent =
+
+        "📍 " +
+        selectedLocation.name +
+        " • " +
+        selectedLocation.state;
+
+
+    document.getElementById(
+        "bookingName"
+    ).value =
+        savedName || "";
+
+
+    document.getElementById(
+        "bookingEmail"
+    ).value =
+        savedEmail || "";
+
+
+    document.getElementById(
+        "bookingFormArea"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "paymentArea"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "receipt"
+    ).classList.remove(
+        "active"
+    );
+
+
+    const experience =
+        document.getElementById(
+            "bookingExperience"
+        );
+
+
+    experience.innerHTML = "";
+
+
+    selectedLocation.experiences
+    .forEach(
+        item => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value = item;
+
+            option.textContent = item;
+
+            experience.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    const dateInput =
+        document.getElementById(
+            "bookingDate"
+        );
+
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+    dateInput.min = today;
+
+
+    if(!dateInput.value){
+
+        dateInput.value = today;
+
+    }
+
+
+    updateBookingTotal();
+
+}
+
+
+/* =====================================================
+   CLOSE BOOKING
+===================================================== */
+
+function closeBooking(){
+
+    document.getElementById(
+        "bookingOverlay"
+    ).style.display = "none";
+
+}
+
+
+/* =====================================================
+   UPDATE TOTAL
+===================================================== */
+
+function updateBookingTotal(){
+
+    const guests =
+        Number(
+            document.getElementById(
+                "bookingGuests"
+            ).value
+        );
+
+
+    const total =
+        guests * PRICE_PER_PERSON;
+
+
+    document.getElementById(
+        "summaryGuests"
+    ).textContent =
+        guests;
+
+
+    document.getElementById(
+        "bookingTotal"
+    ).textContent =
+
+        "₹" +
+        total.toLocaleString();
+
+}
+
+
+/* =====================================================
+   CONTINUE PAYMENT
+===================================================== */
+
+function continueToPayment(){
+
+    const name =
+        document.getElementById(
+            "bookingName"
+        )
+        .value
+        .trim();
+
+
+    const email =
+        document.getElementById(
+            "bookingEmail"
+        )
+        .value
+        .trim();
+
+
+    const date =
+        document.getElementById(
+            "bookingDate"
+        ).value;
+
+
+    const guests =
+        Number(
+            document.getElementById(
+                "bookingGuests"
+            ).value
+        );
+
+
+    const experience =
+        document.getElementById(
+            "bookingExperience"
+        ).value;
+
+
+    if(!name){
+
+        alert(
+            "Please enter visitor name."
+        );
+
+        return;
+    }
+
+
+    if(!email){
+
+        alert(
+            "Please enter email."
+        );
+
+        return;
+    }
+
+
+    if(!date){
+
+        alert(
+            "Please select visit date."
+        );
+
+        return;
+    }
+
+
+    if(!experience){
+
+        alert(
+            "Please select an experience."
+        );
+
+        return;
+    }
+
+
+    const total =
+        guests * PRICE_PER_PERSON;
+
+
+    bookingData = {
+
+        name:name,
+
+        email:email,
+
+        date:date,
+
+        guests:guests,
+
+        experience:experience,
+
+        destination:
+            selectedLocation.name,
+
+        state:
+            selectedLocation.state,
+
+        total:total
+
+    };
+
+
+    document.getElementById(
+        "paymentAmount"
+    ).textContent =
+
+        "₹" +
+        total.toLocaleString();
+
+
+    document.getElementById(
+        "bookingFormArea"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "paymentArea"
+    ).style.display =
+        "block";
+
+
+    generateQR(total);
+
+}
+
+
+/* =====================================================
+   GENERATE UPI QR
+===================================================== */
+
+function generateQR(amount){
+
+    const upiID =
+        "exploremyvillage@upi";
+
+
+    const owner =
+        "ExploreMyVillage Community";
+
+
+    const upiURL =
+        "upi://pay?pa=" +
+
+        encodeURIComponent(
+            upiID
+        ) +
+
+        "&pn=" +
+
+        encodeURIComponent(
+            owner
+        ) +
+
+        "&am=" +
+
+        encodeURIComponent(
+            amount
+        ) +
+
+        "&cu=INR";
+
+
+    const qrURL =
+        "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+
+        encodeURIComponent(
+            upiURL
+        );
+
+
+    document.getElementById(
+        "qrImage"
+    ).src =
+        qrURL;
+
+}
+
+
+/* =====================================================
+   PAYMENT METHOD
+===================================================== */
+
+function selectPaymentMethod(
+    method,
+    button
+){
+
+    document
+        .querySelectorAll(
+            ".payment-method"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    if(method === "upi"){
+
+        document.getElementById(
+            "upiPayment"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "scannerPayment"
+        ).style.display =
+            "none";
+
+    }
+
+    else{
+
+        document.getElementById(
+            "upiPayment"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "scannerPayment"
+        ).style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =====================================================
+   PROCESS PAYMENT
+===================================================== */
+
+function processPayment(){
+
+    if(!bookingData){
+
+        alert(
+            "Booking information is missing."
+        );
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+
+            "Have you completed the payment of ₹" +
+
+            bookingData.total.toLocaleString() +
+
+            " to ExploreMyVillage Community?"
+
+        );
+
+
+    if(!confirmed){
+
+        return;
+    }
+
+
+    const bookingID =
+        "EMV-" +
+
+        new Date().getFullYear() +
+
+        "-" +
+
+        Math.floor(
+            100000 +
+            Math.random() * 900000
+        );
+
+
+    bookingData.bookingID =
+        bookingID;
+
+
+    bookingData.paymentStatus =
+        "CONFIRMED";
+
+
+    bookingData.paymentMethod =
+        "UPI / QR";
+
+
+    bookingData.owner =
+        "ExploreMyVillage Community";
+
+
+    document.getElementById(
+        "paymentArea"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "receipt"
+    ).classList.add(
+        "active"
+    );
+
+
+    document.getElementById(
+        "receiptNumber"
+    ).textContent =
+
+        "BOOKING ID: " +
+        bookingID;
+
+
+    document.getElementById(
+        "receiptUser"
+    ).textContent =
+        bookingData.name;
+
+
+    document.getElementById(
+        "receiptEmail"
+    ).textContent =
+        bookingData.email;
+
+
+    document.getElementById(
+        "receiptVillage"
+    ).textContent =
+        bookingData.destination;
+
+
+    document.getElementById(
+        "receiptExperience"
+    ).textContent =
+        bookingData.experience;
+
+
+    document.getElementById(
+        "receiptDate"
+    ).textContent =
+        formatDate(
+            bookingData.date
+        );
+
+
+    document.getElementById(
+        "receiptGuests"
+    ).textContent =
+        bookingData.guests;
+
+
+    document.getElementById(
+        "receiptAmount"
+    ).textContent =
+
+        "₹" +
+        bookingData.total.toLocaleString();
+
+
+    localStorage.setItem(
+        "lastExploreBooking",
+        JSON.stringify(
+            bookingData
+        )
+    );
+
+}
+
+
+/* =====================================================
+   BACK TO BOOKING
+===================================================== */
+
+function backToBooking(){
+
+    document.getElementById(
+        "paymentArea"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "bookingFormArea"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
+
+function formatDate(date){
+
+    if(!date){
+
+        return "-";
+
+    }
+
+
+    const parts =
+        date.split("-");
+
+
+    if(parts.length !== 3){
+
+        return date;
+
+    }
+
+
+    return (
+
+        parts[2] +
+        "-" +
+        parts[1] +
+        "-" +
+        parts[0]
+
+    );
+
+}
+
+
+/* =====================================================
+   PRINT BOOKING
+===================================================== */
+
+function printBooking(){
+
+    if(!bookingData){
+
+        alert(
+            "No booking information available."
+        );
+
+        return;
+    }
+
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=700,height=800"
+        );
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                ExploreMyVillage Booking
+            </title>
+
+            <style>
+
+                body{
+                    font-family:Arial,sans-serif;
+                    padding:35px;
+                    color:#14251b;
+                }
+
+                h1{
+                    color:#27763a;
+                }
+
+                .id{
+                    padding:12px;
+                    background:#e5f2e7;
+                    color:#226534;
+                    font-weight:bold;
+                    margin:20px 0;
+                }
+
+                table{
+                    width:100%;
+                    border-collapse:collapse;
+                }
+
+                td{
+                    padding:10px;
+                    border-bottom:1px solid #ddd;
+                }
+
+                td:first-child{
+                    color:#667269;
+                    width:40%;
+                }
+
+                td:last-child{
+                    font-weight:bold;
+                }
+
+                .success{
+                    color:#28763c;
+                    font-weight:bold;
+                }
+
+            </style>
+
+        </head>
+
+
+        <body>
+
+            <h1>
+                ExploreMyVillage 🌱
+            </h1>
+
+            <h2>
+                Booking Confirmation
+            </h2>
+
+            <div class="id">
+
+                Booking ID:
+                ${bookingData.bookingID}
+
+            </div>
+
+
+            <table>
+
+                <tr>
+                    <td>Visitor</td>
+                    <td>${bookingData.name}</td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td>${bookingData.email}</td>
+                </tr>
+
+                <tr>
+                    <td>Destination</td>
+                    <td>${bookingData.destination}</td>
+                </tr>
+
+                <tr>
+                    <td>State</td>
+                    <td>${bookingData.state}</td>
+                </tr>
+
+                <tr>
+                    <td>Experience</td>
+                    <td>${bookingData.experience}</td>
+                </tr>
+
+                <tr>
+                    <td>Visit Date</td>
+                    <td>${formatDate(bookingData.date)}</td>
+                </tr>
+
+                <tr>
+                    <td>Visitors</td>
+                    <td>${bookingData.guests}</td>
+                </tr>
+
+                <tr>
+                    <td>Payment Method</td>
+                    <td>${bookingData.paymentMethod}</td>
+                </tr>
+
+                <tr>
+                    <td>QR Owner</td>
+                    <td>${bookingData.owner}</td>
+                </tr>
+
+                <tr>
+                    <td>Total Paid</td>
+                    <td>
+                        ₹${bookingData.total.toLocaleString()}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Status</td>
+                    <td class="success">
+                        ✓ ${bookingData.paymentStatus}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <p style="margin-top:30px;">
+
+                Thank you for supporting sustainable
+                rural tourism and local communities.
+
+            </p>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    printWindow.document.close();
+
+    printWindow.focus();
+
+
+    setTimeout(
+        () => printWindow.print(),
+        300
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH + FILTER
+===================================================== */
+
+document.getElementById(
+    "searchInput"
+).addEventListener(
+    "input",
+    renderLocations
+);
+
+
+document.getElementById(
+    "stateFilter"
+).addEventListener(
+    "change",
+    renderLocations
+);
+
+
+document.getElementById(
+    "categoryFilter"
+).addEventListener(
+    "change",
+    renderLocations
+);
+
+
+/* =====================================================
+   COUNTERS
+===================================================== */
+
+function updateCounters(){
+
+    document.getElementById(
+        "locationCount"
+    ).textContent =
+        destinations.length;
+
+
+    document.getElementById(
+        "stateCount"
+    ).textContent =
+
+        new Set(
+            destinations.map(
+                item => item.state
+            )
+        ).size;
+
+
+    document.getElementById(
+        "businessCount"
+    ).textContent =
+        "50+";
+
+
+    document.getElementById(
+        "experienceCount"
+    ).textContent =
+
+        destinations.reduce(
+            (total,item) =>
+
+                total +
+                item.experiences.length,
+
+            0
+        );
+
+}
+
+
+/* =====================================================
+   CANVAS
+===================================================== */
+
+const canvas =
+    document.getElementById(
+        "villageCanvas"
+    );
+
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let particles = [];
+
+
+let mouse = {
+    x:null,
+    y:null
+};
+
+
+function resizeCanvas(){
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    canvas.width =
+        rect.width;
+
+
+    canvas.height =
+        rect.height;
+
+
+    particles = [];
+
+
+    const count =
+        Math.max(
+            30,
+            Math.floor(
+                canvas.width / 12
+            )
+        );
+
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        particles.push({
+
+            x:
+                Math.random() *
+                canvas.width,
+
+            y:
+                Math.random() *
+                canvas.height,
+
+            vx:
+                (Math.random()-.5)
+                * .5,
+
+            vy:
+                (Math.random()-.5)
+                * .5,
+
+            size:
+                Math.random()*2+1
+
+        });
+
+    }
+
+}
+
+
+canvas.addEventListener(
+    "mousemove",
+    function(event){
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        mouse.x =
+            event.clientX -
+            rect.left;
+
+
+        mouse.y =
+            event.clientY -
+            rect.top;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "mouseleave",
+    function(){
+
+        mouse.x = null;
+
+        mouse.y = null;
+
+    }
+);
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+/* =====================================================
+   CANVAS ANIMATION
+===================================================== */
+
+function animateCanvas(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /* Background grid */
+
+    ctx.strokeStyle =
+        "rgba(57,232,121,.035)";
+
+    ctx.lineWidth = 1;
+
+
+    const gridSize = 40;
+
+
+    for(
+        let x=0;
+        x<canvas.width;
+        x+=gridSize
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            0
+        );
+
+        ctx.lineTo(
+            x,
+            canvas.height
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    for(
+        let y=0;
+        y<canvas.height;
+        y+=gridSize
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            y
+        );
+
+        ctx.lineTo(
+            canvas.width,
+            y
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    particles.forEach(
+        (particle,index) => {
+
+            particle.x +=
+                particle.vx;
+
+            particle.y +=
+                particle.vy;
+
+
+            if(
+                particle.x < 0 ||
+                particle.x > canvas.width
+            ){
+
+                particle.vx *= -1;
+
+            }
+
+
+            if(
+                particle.y < 0 ||
+                particle.y > canvas.height
+            ){
+
+                particle.vy *= -1;
+
+            }
+
+
+            if(mouse.x !== null){
+
+                const dx =
+                    particle.x -
+                    mouse.x;
+
+                const dy =
+                    particle.y -
+                    mouse.y;
+
+                const distance =
+                    Math.sqrt(
+                        dx*dx +
+                        dy*dy
+                    );
+
+
+                if(distance < 120){
+
+                    particle.x +=
+                        dx /
+                        (distance || 1)
+                        * 1.2;
+
+                    particle.y +=
+                        dy /
+                        (distance || 1)
+                        * 1.2;
+
+                }
+
+            }
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                particle.x,
+                particle.y,
+                particle.size,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle =
+                "#39e879";
+
+            ctx.fill();
+
+
+            for(
+                let j=index+1;
+                j<particles.length;
+                j++
+            ){
+
+                const other =
+                    particles[j];
+
+
+                const dx =
+                    particle.x -
+                    other.x;
+
+                const dy =
+                    particle.y -
+                    other.y;
+
+
+                const distance =
+                    Math.sqrt(
+                        dx*dx +
+                        dy*dy
+                    );
+
+
+                if(distance < 75){
+
+                    ctx.beginPath();
+
+                    ctx.moveTo(
+                        particle.x,
+                        particle.y
+                    );
+
+                    ctx.lineTo(
+                        other.x,
+                        other.y
+                    );
+
+                    ctx.strokeStyle =
+
+                        "rgba(57,232,121," +
+
+                        (
+                            (1-distance/75)
+                            *.18
+                        ) +
+
+                        ")";
+
+                    ctx.stroke();
+
+                }
+
+            }
+
+        }
+    );
+
+
+    requestAnimationFrame(
+        animateCanvas
+    );
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+loadStates();
+
+renderLocations();
+
+updateCounters();
+
+updateProfile();
+
+resizeCanvas();
+
+animateCanvas();
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+document.getElementById(
+    "loginButton"
+).onclick = function(){
+
+    if(
+        localStorage.getItem(
+            "exploreUserName"
+        )
+    ){
+
+        alert(
+
+            "You are already logged in as " +
+
+            localStorage.getItem(
+                "exploreUserName"
+            )
+
+        );
+
+    }
+
+    else{
+
+        openLogin();
+
+    }
+
+};
+
+
+/* =====================================================
+   CLOSE MODALS OUTSIDE
+===================================================== */
+
+document.getElementById(
+    "loginModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeLogin();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "bookingOverlay"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeBooking();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
