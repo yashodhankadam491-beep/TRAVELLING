@@ -14,34 +14,88 @@ const destinations=[
 ];
 
 const $=id=>document.getElementById(id);
-const authPage=$("authPage"),site=$("site"),loginBox=$("loginBox"),registerBox=$("registerBox"),loginTab=$("loginTab"),registerTab=$("registerTab");
-const usersKey="emv_users",currentKey="emv_current_user";
+const usersKey="emv_users",currentKey="emv_current_user",requestsKey="emv_visit_requests";
 let selectedDestination=null;
-function users(){try{return JSON.parse(localStorage.getItem(usersKey))||[]}catch{return[]}}
-function currentUser(){try{return JSON.parse(localStorage.getItem(currentKey))||null}catch{return null}}
+const authPage=$("authPage"),site=$("site"),loginBox=$("loginBox"),registerBox=$("registerBox"),loginTab=$("loginTab"),registerTab=$("registerTab");
+
+function readJSON(key,fallback){try{const value=JSON.parse(localStorage.getItem(key));return value??fallback}catch{return fallback}}
+function getUsers(){return readJSON(usersKey,[])}
+function getCurrentUser(){return readJSON(currentKey,null)}
+function setCurrentUser(user){localStorage.setItem(currentKey,JSON.stringify(user))}
+function removeCurrentUser(){localStorage.removeItem(currentKey)}
 function showMessage(id,msg){$(id).textContent=msg}
 function toast(msg){const el=$("toast");el.textContent=msg;el.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove("show"),3000)}
-function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
+
+async function hashPassword(password){const data=new TextEncoder().encode(password);const hash=await crypto.subtle.digest("SHA-256",data);return [...new Uint8Array(hash)].map(byte=>byte.toString(16).padStart(2,"0")).join("")}
+function validEmail(email){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)}
+
 function switchAuth(mode){const login=mode==="login";loginBox.classList.toggle("hidden",!login);registerBox.classList.toggle("hidden",login);loginTab.classList.toggle("active",login);registerTab.classList.toggle("active",!login);showMessage("loginMessage","");showMessage("registerMessage","")}
 loginTab.addEventListener("click",()=>switchAuth("login"));registerTab.addEventListener("click",()=>switchAuth("register"));$("goRegister").addEventListener("click",()=>switchAuth("register"));$("goLogin").addEventListener("click",()=>switchAuth("login"));
-document.querySelectorAll(".show-pass").forEach(btn=>btn.addEventListener("click",()=>{const input=$(btn.dataset.target);input.type=input.type==="password"?"text":"password";btn.textContent=input.type==="password"?"Show":"Hide"}));
-$("registerForm").addEventListener("submit",e=>{e.preventDefault();showMessage("registerMessage","");const name=$("registerName").value.trim(),email=$("registerEmail").value.trim().toLowerCase(),password=$("registerPassword").value,confirm=$("registerConfirm").value;if(name.length<2)return showMessage("registerMessage","Please enter your full name.");if(password.length<6)return showMessage("registerMessage","Password must contain at least 6 characters.");if(password!==confirm)return showMessage("registerMessage","Passwords do not match.");const list=users();if(list.some(u=>u.email===email))return showMessage("registerMessage","An account with this email already exists.");list.push({name,email,password});localStorage.setItem(usersKey,JSON.stringify(list));localStorage.setItem(currentKey,JSON.stringify({name,email}));$("registerForm").reset();openSite({name,email});toast(`Welcome, ${name}!`)});
-$("loginForm").addEventListener("submit",e=>{e.preventDefault();showMessage("loginMessage","");const email=$("loginEmail").value.trim().toLowerCase(),password=$("loginPassword").value;const user=users().find(u=>u.email===email&&u.password===password);if(!user)return showMessage("loginMessage","Invalid email or password.");localStorage.setItem(currentKey,JSON.stringify({name:user.name,email:user.email}));$("loginForm").reset();openSite(user);toast(`Welcome back, ${user.name}!`)});
-function updateProfile(user){$("profileName").textContent=user.name||"Visitor";$("avatar").textContent=(user.name||"V").charAt(0).toUpperCase();$("visitorName").value=user.name||""}
+
+document.querySelectorAll(".show-pass").forEach(button=>button.addEventListener("click",()=>{const input=$(button.dataset.target);input.type=input.type==="password"?"text":"password";button.textContent=input.type==="password"?"Show":"Hide"}));
+
+$("registerForm").addEventListener("submit",async event=>{
+ event.preventDefault();showMessage("registerMessage","");
+ const name=$("registerName").value.trim(),email=$("registerEmail").value.trim().toLowerCase(),password=$("registerPassword").value,confirm=$("registerConfirm").value;
+ if(name.length<2)return showMessage("registerMessage","Please enter your full name.");
+ if(!validEmail(email))return showMessage("registerMessage","Please enter a valid email address.");
+ if(password.length<8)return showMessage("registerMessage","Password must contain at least 8 characters.");
+ if(!/[A-Za-z]/.test(password)||!/[0-9]/.test(password))return showMessage("registerMessage","Use at least one letter and one number in your password.");
+ if(password!==confirm)return showMessage("registerMessage","Passwords do not match.");
+ const list=getUsers();if(list.some(user=>user.email===email))return showMessage("registerMessage","An account with this email already exists.");
+ const passwordHash=await hashPassword(password);list.push({name,email,passwordHash});localStorage.setItem(usersKey,JSON.stringify(list));const session={name,email};setCurrentUser(session);event.target.reset();openSite(session);toast(`Welcome, ${name}!`);
+});
+
+$("loginForm").addEventListener("submit",async event=>{
+ event.preventDefault();showMessage("loginMessage","");
+ const email=$("loginEmail").value.trim().toLowerCase(),password=$("loginPassword").value;
+ if(!validEmail(email))return showMessage("loginMessage","Please enter a valid email address.");
+ const user=getUsers().find(item=>item.email===email);if(!user)return showMessage("loginMessage","Invalid email or password.");
+ const passwordHash=await hashPassword(password);if(user.passwordHash!==passwordHash)return showMessage("loginMessage","Invalid email or password.");
+ const session={name:user.name,email:user.email};setCurrentUser(session);event.target.reset();openSite(session);toast(`Welcome back, ${user.name}!`);
+});
+
+function updateProfile(user){const name=user?.name||"Visitor";$("profileName").textContent=name;$("avatar").textContent=name.charAt(0).toUpperCase();$("visitorName").value=name}
 function openSite(user){authPage.classList.add("hidden");site.classList.remove("hidden");updateProfile(user);renderDestinations(destinations);window.scrollTo({top:0,behavior:"instant"})}
-$("logoutBtn").addEventListener("click",()=>{localStorage.removeItem(currentKey);site.classList.add("hidden");authPage.classList.remove("hidden");switchAuth("login");toast("You have been logged out.");window.scrollTo({top:0,behavior:"instant"})});
-function categoryName(c){return({beach:"Beach",hill:"Hill Station",heritage:"Heritage",culture:"Culture",nature:"Nature"}[c]||c)}
-function renderDestinations(list){const grid=$("destinationGrid");grid.innerHTML="";if(!list.length){grid.innerHTML='<div class="empty">No destinations found. Try another search or filter.</div>';return}list.forEach(d=>{const card=document.createElement("article");card.className="destination-card";card.innerHTML=`<div class="destination-img"><img src="${d.image}" alt="${escapeHTML(d.name)}" loading="lazy"><span class="tag">${categoryName(d.category)}</span></div><div class="destination-body"><h3>${escapeHTML(d.name)}</h3><div class="location">📍 ${escapeHTML(d.location)}</div><p>${escapeHTML(d.description)}</p><div class="chips">${d.tags.map(t=>`<span class="chip">${escapeHTML(t)}</span>`).join("")}</div><div class="card-actions"><button class="btn btn-primary view-btn" data-id="${d.id}" type="button">Explore</button><button class="btn btn-outline plan-btn" data-id="${d.id}" type="button">Plan Visit</button></div></div>`;grid.appendChild(card)})}
-function applyFilters(){const q=$("searchInput").value.trim().toLowerCase(),cat=$("categoryFilter").value,reg=$("regionFilter").value;renderDestinations(destinations.filter(d=>{const text=[d.name,d.location,d.description,d.food,d.craft,d.culture,...d.tags].join(" ").toLowerCase();return text.includes(q)&&(cat==="all"||d.category===cat)&&(reg==="all"||d.region===reg)}))}
+$("logoutBtn").addEventListener("click",()=>{removeCurrentUser();site.classList.add("hidden");authPage.classList.remove("hidden");switchAuth("login");toast("You have been logged out. You can now sign in with another account.");window.scrollTo({top:0,behavior:"instant"})});
+
+function categoryName(category){return({beach:"Beach",hill:"Hill Station",heritage:"Heritage",culture:"Culture",nature:"Nature"}[category]||category)}
+function regionName(region){return({maharashtra:"Maharashtra",kerala:"Kerala",karnataka:"Karnataka",goa:"Goa",'uttar-pradesh':"Uttar Pradesh"}[region]||region)}
+
+function createDestinationCard(destination){
+ const card=document.createElement("article");card.className="destination-card";
+ const imageWrap=document.createElement("div");imageWrap.className="destination-img";
+ const image=document.createElement("img");image.src=destination.image;image.alt=destination.name;image.loading="lazy";image.decoding="async";
+ const tag=document.createElement("span");tag.className="tag";tag.textContent=categoryName(destination.category);imageWrap.append(image,tag);
+ const body=document.createElement("div");body.className="destination-body";
+ const title=document.createElement("h3");title.textContent=destination.name;
+ const location=document.createElement("div");location.className="location";location.textContent=`📍 ${destination.location}`;
+ const description=document.createElement("p");description.textContent=destination.description;
+ const chips=document.createElement("div");chips.className="chips";destination.tags.forEach(text=>{const chip=document.createElement("span");chip.className="chip";chip.textContent=text;chips.appendChild(chip)});
+ const actions=document.createElement("div");actions.className="card-actions";
+ const view=document.createElement("button");view.className="btn btn-primary view-btn";view.type="button";view.dataset.id=String(destination.id);view.textContent="Explore";
+ const plan=document.createElement("button");plan.className="btn btn-outline plan-btn";plan.type="button";plan.dataset.id=String(destination.id);plan.textContent="Plan Visit";actions.append(view,plan);
+ body.append(title,location,description,chips,actions);card.append(imageWrap,body);return card;
+}
+
+function renderDestinations(list){const grid=$("destinationGrid");const fragment=document.createDocumentFragment();if(!list.length){const empty=document.createElement("div");empty.className="empty";empty.textContent="No destinations found. Try another search or filter.";fragment.appendChild(empty)}else list.forEach(destination=>fragment.appendChild(createDestinationCard(destination)));grid.replaceChildren(fragment)}
+
+function applyFilters(){const query=$("searchInput").value.trim().toLowerCase(),category=$("categoryFilter").value,region=$("regionFilter").value;const filtered=destinations.filter(destination=>{const text=[destination.name,destination.location,destination.description,destination.food,destination.craft,destination.culture,...destination.tags].join(" ").toLowerCase();return text.includes(query)&&(category==="all"||destination.category===category)&&(region==="all"||destination.region===region)});renderDestinations(filtered)}
 $("searchInput").addEventListener("input",applyFilters);$("categoryFilter").addEventListener("change",applyFilters);$("regionFilter").addEventListener("change",applyFilters);
-$("destinationGrid").addEventListener("click",e=>{const view=e.target.closest(".view-btn"),plan=e.target.closest(".plan-btn");if(view||plan){selectedDestination=destinations.find(d=>d.id===Number((view||plan).dataset.id));if(plan)openVisit();else openDestination()}});
+
+$("destinationGrid").addEventListener("click",event=>{const button=event.target.closest("button[data-id]");if(!button)return;selectedDestination=destinations.find(destination=>destination.id===Number(button.dataset.id));if(!selectedDestination)return;if(button.classList.contains("plan-btn"))openVisit();else openDestination()});
 function openDestination(){if(!selectedDestination)return;$("modalImage").src=selectedDestination.image;$("modalImage").alt=selectedDestination.name;$("modalCategory").textContent=categoryName(selectedDestination.category);$("modalTitle").textContent=selectedDestination.name;$("modalDescription").textContent=selectedDestination.description;$("modalLocation").textContent=selectedDestination.location;$("modalFood").textContent=selectedDestination.food;$("modalCraft").textContent=selectedDestination.craft;$("modalCulture").textContent=selectedDestination.culture;$("destinationModal").classList.remove("hidden");document.body.style.overflow="hidden"}
-function closeModal(id){$(id).classList.add("hidden");document.body.style.overflow=""}
-$("modalClose").addEventListener("click",()=>closeModal("destinationModal"));$("modalClose2").addEventListener("click",()=>closeModal("destinationModal"));$("modalOverlay").addEventListener("click",()=>closeModal("destinationModal"));$("visitBtn").addEventListener("click",()=>{closeModal("destinationModal");openVisit()});
-function openVisit(){if(!selectedDestination)return;$("visitTitle").textContent=`Plan a visit to ${selectedDestination.name}`;const u=currentUser();if(u)$("visitorName").value=u.name;$("visitModal").classList.remove("hidden");document.body.style.overflow="hidden"}
+function closeModal(id){$(id).classList.add("hidden");if($("destinationModal").classList.contains("hidden")&&$("visitModal").classList.contains("hidden"))document.body.style.overflow=""}
+$("modalClose").addEventListener("click",()=>closeModal("destinationModal"));$("modalClose2").addEventListener("click",()=>closeModal("destinationModal"));$("modalOverlay").addEventListener("click",()=>closeModal("destinationModal"));
+$("visitBtn").addEventListener("click",()=>{closeModal("destinationModal");openVisit()});
+function openVisit(){if(!selectedDestination)return;$("visitTitle").textContent=`Plan a visit to ${selectedDestination.name}`;const user=getCurrentUser();if(user)$("visitorName").value=user.name;const date=$("visitDate");const today=new Date();today.setHours(0,0,0,0);date.min=today.toISOString().slice(0,10);$("visitModal").classList.remove("hidden");document.body.style.overflow="hidden"}
 $("visitClose").addEventListener("click",()=>closeModal("visitModal"));$("visitOverlay").addEventListener("click",()=>closeModal("visitModal"));
-$("visitForm").addEventListener("submit",e=>{e.preventDefault();if(!selectedDestination)return;const date=$("visitDate").value;const name=$("visitorName").value.trim();if(!name||!date)return;closeModal("visitModal");e.target.reset();toast(`Visit request sent for ${selectedDestination.name}.`)});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal("destinationModal");closeModal("visitModal")}});$("year").textContent=new Date().getFullYear();
-$("mobileMenu").addEventListener("click",()=>{const nav=$("navLinks");const open=nav.dataset.open==="1";nav.dataset.open=open?"0":"1";if(window.innerWidth<=1000){nav.style.display=open?"none":"flex";nav.style.position=open?"":"absolute";nav.style.top=open?"":"68px";nav.style.right=open?"":"3%";nav.style.left=open?"":"3%";nav.style.flexDirection=open?"":"column";nav.style.alignItems=open?"":"stretch";nav.style.padding=open?"":"10px";nav.style.background=open?"":"white";nav.style.border=open?"":"1px solid var(--line)";nav.style.borderRadius=open?"":"14px";nav.style.boxShadow=open?"":"0 15px 35px rgba(20,40,30,.12)"}});
-document.querySelectorAll("#navLinks a").forEach(a=>a.addEventListener("click",()=>{if(window.innerWidth<=1000){const nav=$("navLinks");nav.dataset.open="0";nav.style.display="none"}}));
-document.addEventListener("DOMContentLoaded",()=>{const u=currentUser();if(u)openSite(u);else switchAuth("login")});
+
+$("visitForm").addEventListener("submit",event=>{event.preventDefault();if(!selectedDestination)return;const name=$("visitorName").value.trim(),date=$("visitDate").value,message=$("visitorMessage").value.trim();if(name.length<2||!date||!message)return;const requests=readJSON(requestsKey,[]);requests.push({id:crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}`,destinationId:selectedDestination.id,destination:selectedDestination.name,name,date,message,status:"PENDING",createdAt:new Date().toISOString()});localStorage.setItem(requestsKey,JSON.stringify(requests));closeModal("visitModal");event.target.reset();const user=getCurrentUser();if(user)$("visitorName").value=user.name;toast(`Visit request saved as PENDING for ${selectedDestination.name}. No payment was processed or falsely confirmed.`)});
+
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeModal("destinationModal");closeModal("visitModal")}});
+$("mobileMenu").addEventListener("click",()=>{const open=$("navLinks").classList.toggle("mobile-open");$("mobileMenu").setAttribute("aria-expanded",String(open))});
+$("navLinks").addEventListener("click",event=>{if(event.target.matches("a")){ $("navLinks").classList.remove("mobile-open");$("mobileMenu").setAttribute("aria-expanded","false") }});
+$("year").textContent=String(new Date().getFullYear());
+
+document.addEventListener("DOMContentLoaded",()=>{const user=getCurrentUser();if(user)openSite(user);else switchAuth("login")});
