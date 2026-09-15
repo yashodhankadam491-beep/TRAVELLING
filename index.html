@@ -1,326 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b5d3b">
-<meta name="description" content="ExploreMyVillage connects visitors with rural destinations, local businesses, artisans, food, culture and authentic experiences across India.">
-<title>ExploreMyVillage | Sustainable Rural Tourism & Local Economy</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
-
-:root{
-  --green:#0b5d3b;--green-2:#16835a;--green-3:#dff4e9;--gold:#d9a441;
-  --ink:#17231d;--muted:#66756d;--cream:#f7f5ef;--white:#fff;
-  --line:#e4e9e5;--danger:#b42318;--shadow:0 18px 50px rgba(24,45,34,.12);
-  --radius:20px;
-}
-*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
-button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
-.hidden{display:none!important}
-.container{width:min(1180px,92%);margin:auto}
-
-/* AUTH */
-.auth-page{min-height:100vh;display:grid;grid-template-columns:1.08fr .92fr;background:#f7f8f5}
-.auth-visual{position:relative;overflow:hidden;padding:52px clamp(30px,6vw,90px);display:flex;flex-direction:column;justify-content:space-between;color:white;background:linear-gradient(145deg,#063d28,#0b6a43 58%,#174f3a)}
-.auth-visual:before,.auth-visual:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
-.auth-visual:before{width:520px;height:520px;right:-220px;top:-180px;background:rgba(255,255,255,.08)}
-.auth-visual:after{width:430px;height:430px;left:-220px;bottom:-190px;background:rgba(217,164,65,.12)}
-.auth-brand{position:relative;z-index:1;font-weight:800;font-size:22px;letter-spacing:-.4px}
-.auth-brand span{display:inline-grid;place-items:center;width:40px;height:40px;margin-right:9px;border-radius:12px;background:rgba(255,255,255,.13);vertical-align:middle}
-.auth-copy{position:relative;z-index:1;max-width:620px;margin:auto 0}
-.auth-copy .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:800;color:#cdebdc}
-.auth-copy h1{font-family:'Playfair Display',serif;font-size:clamp(45px,6vw,78px);line-height:1.02;margin:16px 0 20px}
-.auth-copy p{max-width:590px;color:#e2f0e8;font-size:17px}
-.auth-points{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
-.auth-points span{padding:9px 13px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.08);font-size:13px}
-.auth-panel{display:flex;align-items:center;justify-content:center;padding:35px;background:white}
-.auth-card{width:min(450px,100%);padding:38px;border:1px solid var(--line);border-radius:28px;box-shadow:0 25px 70px rgba(20,40,30,.10);background:white}
-.auth-card h2{font-family:'Playfair Display',serif;font-size:34px;line-height:1.1;margin-bottom:8px}
-.auth-card>p{color:var(--muted);font-size:14px;margin-bottom:25px}
-.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:#f1f4f1;padding:4px;border-radius:12px;margin-bottom:23px}
-.auth-tab{border:0;background:transparent;padding:10px;border-radius:9px;font-weight:700;color:var(--muted)}
-.auth-tab.active{background:white;color:var(--green);box-shadow:0 3px 12px rgba(0,0,0,.07)}
-.field{margin-bottom:15px}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:7px;color:#405048}
-.field input{width:100%;padding:13px 14px;border:1px solid #dce3de;border-radius:11px;outline:0;background:#fbfcfb;transition:.2s}
-.field input:focus{border-color:var(--green-2);box-shadow:0 0 0 4px rgba(22,131,90,.09)}
-.password-wrap{position:relative}.password-wrap input{padding-right:70px}.show-pass{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--green);font-size:12px;font-weight:800}
-.primary{width:100%;border:0;padding:14px;border-radius:12px;background:var(--green);color:white;font-weight:800;box-shadow:0 10px 25px rgba(11,93,59,.18);transition:.2s}.primary:hover{background:#084c30;transform:translateY(-1px)}
-.form-note{margin-top:13px;text-align:center;color:var(--muted);font-size:12px}.auth-message{min-height:20px;margin:10px 0;color:var(--danger);font-size:12px;font-weight:700}
-
-/* SITE */
-.site{min-height:100vh;background:var(--cream)}
-.navbar{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.nav-inner{width:min(1240px,94%);min-height:76px;margin:auto;display:flex;align-items:center;gap:24px}
-.logo{display:flex;align-items:center;gap:10px;color:var(--green);font-weight:800;font-size:20px;white-space:nowrap}.logo-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:var(--green-3);font-size:20px}
-.nav-links{display:flex;align-items:center;gap:4px;margin-left:auto}.nav-links a{padding:9px 12px;color:#4f5e56;font-size:13px;font-weight:700;border-radius:9px}.nav-links a:hover{background:var(--green-3);color:var(--green)}
-.nav-actions{display:flex;align-items:center;gap:8px}.profile{display:flex;align-items:center;gap:8px;padding:5px 9px 5px 5px;border:1px solid var(--line);border-radius:999px;background:#fff}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:white;font-weight:800;font-size:12px}.profile-name{font-size:12px;font-weight:800;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.logout{border:0;background:transparent;color:#7b4d46;font-size:12px;font-weight:800;padding:8px}.mobile-menu{display:none;border:1px solid var(--line);background:white;border-radius:10px;padding:8px 10px}
-
-.hero{position:relative;overflow:hidden;padding:90px 0 78px;background:linear-gradient(135deg,#f7f5ef 0%,#eef6f0 100%)}
-.hero:after{content:"";position:absolute;width:600px;height:600px;border-radius:50%;right:-260px;top:-300px;background:rgba(11,93,59,.08)}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:65px;align-items:center;position:relative;z-index:1}
-.eyebrow{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}.eyebrow:before{content:"";width:26px;height:2px;background:var(--gold)}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(46px,6vw,76px);line-height:1.02;letter-spacing:-2px;margin:16px 0 20px}.hero h1 em{color:var(--green);font-style:normal}.hero p{max-width:660px;color:#5e6e65;font-size:17px}.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid transparent;border-radius:11px;padding:12px 17px;font-weight:800;font-size:13px;transition:.2s}.btn-primary{background:var(--green);color:white}.btn-primary:hover{background:#084c30;transform:translateY(-2px)}.btn-outline{background:white;border-color:#d6ded8;color:var(--green)}.btn-outline:hover{border-color:var(--green);transform:translateY(-2px)}
-.hero-card{min-height:410px;border-radius:28px;overflow:hidden;position:relative;box-shadow:var(--shadow);background:#1e4637;border:8px solid rgba(255,255,255,.6)}
-.hero-card img{width:100%;height:100%;min-height:394px;object-fit:cover;display:block;filter:saturate(.9)}.hero-overlay{position:absolute;inset:auto 18px 18px;padding:18px;border-radius:17px;background:rgba(15,39,29,.82);color:white;backdrop-filter:blur(12px)}.hero-overlay small{color:#a9d9c0;font-weight:800}.hero-overlay h3{font-family:'Playfair Display',serif;font-size:25px;margin-top:2px}.hero-overlay p{font-size:12px;color:#d1e2d8;margin-top:3px}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:26px 0}.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:20px}.stat strong{display:block;color:var(--green);font-family:'Playfair Display',serif;font-size:30px}.stat span{font-size:12px;color:var(--muted);font-weight:700}
-.section{padding:78px 0}.section.alt{background:white}.section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:28px}.section-head h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,46px);line-height:1.08;margin-top:7px}.section-head p{max-width:610px;color:var(--muted);font-size:14px;margin-top:9px}.section-head .eyebrow{display:block}
-
-/* DESTINATIONS */
-.controls{display:grid;grid-template-columns:1.7fr .8fr .8fr;gap:10px;padding:12px;background:#f7f9f7;border:1px solid var(--line);border-radius:15px;margin-bottom:22px}.controls input,.controls select{width:100%;padding:12px;border:1px solid #dce4df;border-radius:10px;background:white;outline:0;color:var(--ink)}.controls input:focus,.controls select:focus{border-color:var(--green-2)}
-.destination-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.destination-card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.25s}.destination-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#c6d9cd}.destination-img{height:210px;position:relative;overflow:hidden}.destination-img img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}.destination-card:hover img{transform:scale(1.05)}.tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.92);color:var(--green);padding:6px 9px;border-radius:999px;font-size:10px;font-weight:900}.destination-body{padding:17px}.destination-body h3{font-family:'Playfair Display',serif;font-size:22px}.location{color:var(--green);font-size:11px;font-weight:800;margin:2px 0 7px}.destination-body p{color:var(--muted);font-size:12px;min-height:58px}.chips{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}.chip{font-size:10px;padding:5px 8px;border-radius:999px;background:#f0f6f2;color:#47705c;font-weight:700}.card-actions{display:flex;gap:7px}.card-actions button{flex:1}
-.empty{padding:35px;text-align:center;color:var(--muted);border:1px dashed #cbd7cf;border-radius:15px;grid-column:1/-1;background:#fff}
-
-/* LOCAL ECONOMY */
-.economy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.economy-card{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:24px}.economy-icon{width:45px;height:45px;display:grid;place-items:center;border-radius:13px;background:var(--green-3);font-size:22px;margin-bottom:14px}.economy-card h3{font-family:'Playfair Display',serif;font-size:21px}.economy-card p{color:var(--muted);font-size:12px;margin-top:6px}.economy-card a{display:inline-block;margin-top:14px;color:var(--green);font-size:12px;font-weight:800}
-
-/* FEATURED */
-.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.feature{border-radius:20px;overflow:hidden;position:relative;min-height:300px;background:#214b39}.feature img{width:100%;height:100%;object-fit:cover;display:block}.feature-info{position:absolute;left:18px;right:18px;bottom:18px;padding:17px;border-radius:15px;background:rgba(15,35,27,.82);color:white;backdrop-filter:blur(12px)}.feature-info h3{font-family:'Playfair Display',serif;font-size:25px}.feature-info p{font-size:12px;color:#d7e4dc;margin-top:3px}
-
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}.about-art{border-radius:24px;overflow:hidden;min-height:370px;background:#dceee3}.about-art img{width:100%;height:100%;min-height:370px;object-fit:cover}.about-copy h2{font-family:'Playfair Display',serif;font-size:44px;line-height:1.08;margin:8px 0 15px}.about-copy p{color:var(--muted);font-size:14px;margin-bottom:13px}.impact{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}.impact div{padding:14px;background:#f6f9f6;border-radius:12px;border:1px solid var(--line)}.impact strong{display:block;color:var(--green);font-size:20px}.impact span{font-size:11px;color:var(--muted)}
-
-/* FOOTER */
-footer{background:#10251b;color:#d8e7de;padding:55px 0 25px}.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}.footer-brand{font-size:19px;font-weight:800;color:white}.footer-col h4{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#9bc3ad;margin-bottom:12px}.footer-col a,.footer-col p{display:block;color:#b5c9bd;font-size:12px;margin:7px 0}.footer-bottom{border-top:1px solid rgba(255,255,255,.09);margin-top:35px;padding-top:20px;color:#90a79a;font-size:11px;display:flex;justify-content:space-between;gap:15px}
-
-/* MODALS */
-.modal{position:fixed;inset:0;z-index:2000;background:rgba(9,25,17,.62);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modal-card{width:min(720px,100%);max-height:90vh;overflow:auto;background:white;border-radius:24px;box-shadow:0 30px 90px rgba(0,0,0,.25);position:relative}.modal-head{padding:22px 24px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:start;gap:15px}.modal-head h3{font-family:'Playfair Display',serif;font-size:28px}.modal-head p{font-size:12px;color:var(--muted)}.close{border:0;background:#f1f4f1;width:34px;height:34px;border-radius:50%;font-size:20px;color:#526158}.modal-body{padding:24px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.detail-image{height:270px;border-radius:16px;overflow:hidden}.detail-image img{width:100%;height:100%;object-fit:cover}.detail-copy h4{font-family:'Playfair Display',serif;font-size:25px}.detail-copy .location{margin:3px 0 10px}.detail-copy p{font-size:13px;color:var(--muted)}.detail-list{margin-top:14px;display:grid;gap:8px}.detail-list div{font-size:12px;padding:9px 11px;background:#f5f8f5;border-radius:9px}.modal-actions{display:flex;gap:9px;margin-top:17px}.modal-actions .btn{flex:1}.booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.booking-grid .full{grid-column:1/-1}.booking-grid input,.booking-grid select{width:100%;padding:12px;border:1px solid #dce3de;border-radius:10px;outline:0}.price-box{margin-top:18px;padding:15px;background:#eff7f2;border-radius:13px;display:flex;justify-content:space-between;font-weight:800;color:var(--green)}
-.toast{position:fixed;right:20px;bottom:20px;z-index:3000;background:#17372a;color:white;padding:13px 17px;border-radius:12px;box-shadow:var(--shadow);font-size:12px;font-weight:700;transform:translateY(130px);opacity:0;transition:.3s}.toast.show{transform:translateY(0);opacity:1}
-
-@media(max-width:1000px){.hero-grid,.about-grid{grid-template-columns:1fr}.hero-card{max-width:700px;width:100%;margin:auto}.destination-grid{grid-template-columns:repeat(2,1fr)}.economy-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1.5fr 1fr 1fr}.auth-page{grid-template-columns:1fr}.auth-visual{min-height:410px}.auth-copy{margin:auto 0}.auth-panel{padding:25px}}
-@media(max-width:760px){.nav-inner{min-height:68px}.nav-links{display:none;position:absolute;left:3%;right:3%;top:73px;background:white;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:var(--shadow);flex-direction:column;align-items:stretch}.nav-links.open{display:flex}.nav-links a{text-align:center}.mobile-menu{display:block}.profile-name{display:none}.hero{padding:60px 0}.stats{grid-template-columns:1fr 1fr}.controls{grid-template-columns:1fr}.destination-grid{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr}.section{padding:60px 0}.section-head{display:block}.section-head .btn{margin-top:15px}.footer-grid{grid-template-columns:1fr 1fr}.detail-grid{grid-template-columns:1fr}.detail-image{height:220px}.booking-grid{grid-template-columns:1fr}.booking-grid .full{grid-column:auto}.auth-card{padding:28px}.auth-visual{padding:30px}.auth-copy h1{font-size:48px}}
-@media(max-width:480px){.stats,.economy-grid,.impact,.footer-grid{grid-template-columns:1fr}.hero h1{font-size:43px}.hero-actions .btn{width:100%}.nav-actions{margin-left:auto}.auth-copy p{font-size:14px}.auth-points{display:none}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b5d3b">
+  <meta name="description" content="ExploreMyVillage connects visitors with rural destinations, local businesses, artisans, food, culture and authentic experiences across India.">
+  <title>ExploreMyVillage | Sustainable Rural Tourism & Local Economy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ================= AUTHENTICATION ================= -->
+<!-- LOGIN / REGISTER -->
 <section id="authPage" class="auth-page">
   <div class="auth-visual">
     <div class="auth-brand"><span>🌾</span> ExploreMyVillage</div>
     <div class="auth-copy">
-      <div class="eyebrow">Sustainable Rural Tourism & Local Economy</div>
-      <h1>Travel deeper. <br><span>Support local.</span></h1>
-      <p>Discover India's villages, local businesses, artisans, traditional food, living culture and authentic experiences — while helping rural communities grow sustainably.</p>
-      <div class="auth-points"><span>🌿 Responsible travel</span><span>🧺 Local businesses</span><span>🎨 Artisans & crafts</span><span>🍲 Local food</span></div>
+      <div class="eyebrow">Sustainable Rural Tourism</div>
+      <h1>Discover India's <em>living villages.</em></h1>
+      <p>Connect with rural destinations, local businesses, artisans, traditional food, culture and authentic experiences while supporting sustainable local economies.</p>
+      <div class="auth-points"><span>🏡 Local stays</span><span>🎨 Artisans</span><span>🍲 Local food</span><span>🧭 Community guides</span></div>
     </div>
-    <small style="position:relative;z-index:1;color:#b9d7c6">A community-first travel platform for India's rural destinations.</small>
+    <div class="auth-foot">Travel responsibly • Discover locally • Support communities</div>
   </div>
+
   <div class="auth-panel">
     <div class="auth-card">
-      <h2 id="authTitle">Welcome back</h2>
-      <p id="authSubtitle">Sign in to explore destinations and local experiences.</p>
       <div class="auth-tabs">
-        <button class="auth-tab active" id="loginTab" type="button">Login</button>
-        <button class="auth-tab" id="registerTab" type="button">Register</button>
+        <button id="loginTab" class="auth-tab active" type="button">Login</button>
+        <button id="registerTab" class="auth-tab" type="button">Register</button>
       </div>
-      <form id="authForm" novalidate>
-        <div class="field hidden" id="nameField"><label for="authName">Full name</label><input id="authName" autocomplete="name" placeholder="Your full name"></div>
-        <div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div>
-        <div class="field"><label for="authPassword">Password</label><div class="password-wrap"><input id="authPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required><button class="show-pass" id="showPassword" type="button">Show</button></div></div>
-        <div class="field hidden" id="confirmField"><label for="confirmPassword">Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Repeat your password"></div>
-        <div class="auth-message" id="authMessage" aria-live="polite"></div>
-        <button class="primary" id="authSubmit" type="submit">Login to ExploreMyVillage</button>
-      </form>
-      <div class="form-note">Frontend demo authentication — your profile is stored only in this browser.</div>
+
+      <div id="loginBox">
+        <h2>Welcome back</h2>
+        <p>Login to continue your rural journey.</p>
+        <form id="loginForm" novalidate>
+          <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+          <div class="field"><label for="loginPassword">Password</label><div class="password-wrap"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required><button class="show-pass" type="button" data-target="loginPassword">Show</button></div></div>
+          <div id="loginMessage" class="auth-message" aria-live="polite"></div>
+          <button class="primary" type="submit">Login to Explore</button>
+        </form>
+        <div class="form-note">New here? <button id="goRegister" class="text-button" type="button">Create an account</button></div>
+      </div>
+
+      <div id="registerBox" class="hidden">
+        <h2>Create your account</h2>
+        <p>Join the ExploreMyVillage community.</p>
+        <form id="registerForm" novalidate>
+          <div class="field"><label for="registerName">Full name</label><input id="registerName" type="text" autocomplete="name" placeholder="Your full name" required></div>
+          <div class="field"><label for="registerEmail">Email</label><input id="registerEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+          <div class="field"><label for="registerPassword">Password</label><div class="password-wrap"><input id="registerPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters" required><button class="show-pass" type="button" data-target="registerPassword">Show</button></div></div>
+          <div class="field"><label for="registerConfirm">Confirm password</label><input id="registerConfirm" type="password" autocomplete="new-password" placeholder="Repeat password" required></div>
+          <div id="registerMessage" class="auth-message" aria-live="polite"></div>
+          <button class="primary" type="submit">Create Account</button>
+        </form>
+        <div class="form-note">Already registered? <button id="goLogin" class="text-button" type="button">Login</button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= MAIN WEBSITE ================= -->
+<!-- MAIN WEBSITE -->
 <div id="site" class="site hidden">
-<header class="navbar">
-  <div class="nav-inner">
-    <a class="logo" href="#home" aria-label="ExploreMyVillage home"><span class="logo-icon">🌾</span>ExploreMyVillage</a>
-    <nav class="nav-links" id="navLinks">
-      <a href="#home">Home</a><a href="#destinations">Destinations</a><a href="#local">Local Economy</a><a href="#experiences">Experiences</a><a href="#about">About</a>
-    </nav>
-    <div class="nav-actions">
-      <div class="profile"><div class="avatar" id="profileAvatar">U</div><span class="profile-name" id="profileName">User</span><button class="logout" id="logoutBtn" type="button">Logout</button></div>
-      <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Open menu">☰</button>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a class="logo" href="#home"><span class="logo-icon">🌾</span>ExploreMyVillage</a>
+      <nav id="navLinks" class="nav-links">
+        <a href="#home">Home</a><a href="#explore">Explore</a><a href="#economy">Local Economy</a><a href="#about">About</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="profile"><span id="avatar" class="avatar">V</span><span id="profileName" class="profile-name">Visitor</span></div>
+        <button id="logoutBtn" class="logout" type="button">Logout</button>
+      </div>
+      <button id="mobileMenu" class="mobile-menu" type="button" aria-label="Open menu">☰</button>
     </div>
-  </div>
-</header>
+  </header>
 
-<main>
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div>
-      <div class="eyebrow">Explore India's living villages</div>
-      <h1>Discover places that <em>give back.</em></h1>
-      <p>Connect with rural destinations, local businesses, artisans, food, culture and experiences. Explore responsibly and help keep local economies thriving.</p>
-      <div class="hero-actions"><a class="btn btn-primary" href="#destinations">Explore destinations →</a><a class="btn btn-outline" href="#local">Meet local makers</a></div>
-    </div>
-    <div class="hero-card"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=85" alt="Traditional rural landscape in India" onerror="this.src='https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85'"><div class="hero-overlay"><small>FEATURED REGION · KONKAN</small><h3>Slow travel, local stories</h3><p>Stay close to nature, meet local hosts and experience traditions beyond the usual tourist trail.</p></div></div>
-  </div>
-</section>
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Sustainable Rural Tourism & Local Economy</div>
+          <h1>Discover India's <em>Living Villages.</em></h1>
+          <p>Explore rural destinations, local businesses, artisans, traditional food, culture and authentic experiences while supporting sustainable local economies.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#explore">Explore Destinations →</a><a class="btn btn-outline" href="#economy">Support Local</a></div>
+          <div class="hero-points"><span>✓ Community hosts</span><span>✓ Authentic experiences</span><span>✓ Responsible travel</span></div>
+        </div>
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85" alt="Green rural landscape in India">
+          <div class="hero-overlay"><small>LIVE RURAL NETWORK</small><h3>India Village Grid</h3><p>People • Places • Food • Culture • Experiences</p></div>
+        </div>
+      </div>
+    </section>
 
-<section class="container stats" aria-label="Platform highlights">
-  <div class="stat"><strong>10+</strong><span>Featured destinations</span></div><div class="stat"><strong>40+</strong><span>Local experiences</span></div><div class="stat"><strong>100+</strong><span>Community opportunities</span></div><div class="stat"><strong>100%</strong><span>Community-first mission</span></div>
-</section>
+    <section class="container stats" aria-label="ExploreMyVillage statistics">
+      <div class="stat"><strong>10+</strong><span>Featured destinations</span></div>
+      <div class="stat"><strong>40+</strong><span>Local experiences</span></div>
+      <div class="stat"><strong>100%</strong><span>Community focused</span></div>
+      <div class="stat"><strong>∞</strong><span>Meaningful journeys</span></div>
+    </section>
 
-<section class="section" id="destinations">
-  <div class="container">
-    <div class="section-head"><div><div class="eyebrow">Explore</div><h2>Rural destinations worth discovering</h2><p>From coastal villages to heritage landscapes, find places where travel and local livelihoods meet.</p></div></div>
-    <div class="controls"><input id="searchInput" type="search" placeholder="Search destination, food, craft or culture…" aria-label="Search destinations"><select id="regionFilter" aria-label="Filter by region"><option value="all">All regions</option><option value="Maharashtra">Maharashtra</option><option value="Kerala">Kerala</option><option value="Karnataka">Karnataka</option><option value="Goa">Goa</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Rajasthan">Rajasthan</option></select><select id="typeFilter" aria-label="Filter by category"><option value="all">All categories</option><option value="Coastal">Coastal</option><option value="Heritage">Heritage</option><option value="Hill">Hill & Nature</option><option value="Culture">Culture</option></select></div>
-    <div class="destination-grid" id="destinationGrid"></div>
-  </div>
-</section>
+    <section id="explore" class="section">
+      <div class="container">
+        <div class="section-head"><div><div class="eyebrow">Explore India</div><h2>Find your next rural adventure</h2></div><p>Search destinations and discover the people, food, crafts, culture and experiences behind them.</p></div>
+        <div class="controls">
+          <input id="searchInput" type="search" placeholder="🔎 Search destinations, food, crafts..." aria-label="Search destinations">
+          <select id="categoryFilter" aria-label="Filter by category"><option value="all">All categories</option><option value="beach">Beach</option><option value="hill">Hill</option><option value="heritage">Heritage</option><option value="culture">Culture</option><option value="nature">Nature</option></select>
+          <select id="regionFilter" aria-label="Filter by region"><option value="all">All regions</option><option value="maharashtra">Maharashtra</option><option value="kerala">Kerala</option><option value="karnataka">Karnataka</option><option value="goa">Goa</option><option value="uttar-pradesh">Uttar Pradesh</option></select>
+        </div>
+        <div id="destinationGrid" class="destination-grid"></div>
+      </div>
+    </section>
 
-<section class="section alt" id="local">
-  <div class="container">
-    <div class="section-head"><div><div class="eyebrow">Local economy</div><h2>Spend locally. Travel meaningfully.</h2><p>Tourism becomes sustainable when more of your travel spend reaches the people who make a place special.</p></div></div>
-    <div class="economy-grid">
-      <article class="economy-card"><div class="economy-icon">🏡</div><h3>Local stays</h3><p>Discover homestays and village hosts that let you experience everyday rural life.</p><a href="#destinations">Find a stay →</a></article>
-      <article class="economy-card"><div class="economy-icon">🎨</div><h3>Artisans</h3><p>Support craftspeople preserving traditional skills, materials and stories.</p><a href="#experiences">Meet makers →</a></article>
-      <article class="economy-card"><div class="economy-icon">🍲</div><h3>Local food</h3><p>Taste regional recipes made with local ingredients and generations of knowledge.</p><a href="#experiences">Taste local →</a></article>
-      <article class="economy-card"><div class="economy-icon">🧭</div><h3>Local guides</h3><p>Learn from people who know the landscape, culture and hidden corners best.</p><a href="#experiences">Explore guides →</a></article>
-    </div>
-  </div>
-</section>
+    <section id="economy" class="section alt">
+      <div class="container">
+        <div class="section-head"><div><div class="eyebrow">Local Economy</div><h2>Your journey can support a community</h2></div><p>Choose local services and help rural communities grow through responsible tourism.</p></div>
+        <div class="economy-grid">
+          <article class="economy-card"><div class="economy-icon">🏡</div><h3>Local Stays</h3><p>Stay with local families and experience authentic rural hospitality.</p></article>
+          <article class="economy-card"><div class="economy-icon">🎨</div><h3>Artisans</h3><p>Discover traditional crafts and support local makers directly.</p></article>
+          <article class="economy-card"><div class="economy-icon">🍲</div><h3>Local Food</h3><p>Taste regional recipes prepared with local ingredients.</p></article>
+          <article class="economy-card"><div class="economy-icon">🧭</div><h3>Local Guides</h3><p>Explore with people who know their communities best.</p></article>
+        </div>
+      </div>
+    </section>
 
-<section class="section" id="experiences">
-  <div class="container">
-    <div class="section-head"><div><div class="eyebrow">Authentic experiences</div><h2>More than sightseeing</h2><p>Choose experiences that connect you with people, place and culture.</p></div><button class="btn btn-outline" type="button" id="experienceBtn">View all experiences</button></div>
-    <div class="feature-grid">
-      <article class="feature"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=85" alt="People sharing a local experience"><div class="feature-info"><h3>Village life & local stories</h3><p>Walk with local hosts, learn traditions and discover the stories behind a destination.</p></div></article>
-      <article class="feature"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85" alt="Local food experience"><div class="feature-info"><h3>Food, farms & craft</h3><p>Cook regional dishes, visit farms and discover handmade products directly from makers.</p></div></article>
-    </div>
-  </div>
-</section>
+    <section class="section">
+      <div class="container feature-grid">
+        <article class="feature"><img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85" alt="Indian heritage destination" loading="lazy"><div class="feature-info"><h3>Heritage & Culture</h3><p>Meet the traditions, architecture and stories that make each destination unique.</p></div></article>
+        <article class="feature"><img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=85" alt="Coastal destination" loading="lazy"><div class="feature-info"><h3>Nature & Village Life</h3><p>Slow down, explore natural landscapes and experience life beyond the usual tourist route.</p></div></article>
+      </div>
+    </section>
 
-<section class="section alt" id="about">
-  <div class="container about-grid">
-    <div class="about-art"><img src="https://images.unsplash.com/photo-1469521669194-babb45599def?auto=format&fit=crop&w=1000&q=85" alt="Green rural landscape"></div>
-    <div class="about-copy"><div class="eyebrow">Our mission</div><h2>Tourism that strengthens the village.</h2><p>ExploreMyVillage is designed around a simple idea: visitors should not only see rural India — they should contribute to the communities they visit.</p><p>The platform brings destinations, local businesses, artisans, food, culture and experiences together in one accessible digital space.</p><div class="impact"><div><strong>01</strong><span>Discover local destinations</span></div><div><strong>02</strong><span>Connect with community hosts</span></div><div><strong>03</strong><span>Support local businesses</span></div><div><strong>04</strong><span>Travel with a lighter footprint</span></div></div></div>
-  </div>
-</section>
-</main>
+    <section id="about" class="section alt">
+      <div class="container about-grid">
+        <div class="about-art"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=85" alt="Community experience" loading="lazy"></div>
+        <div class="about-copy"><div class="eyebrow">About ExploreMyVillage</div><h2>Tourism that connects people, places and possibilities.</h2><p>ExploreMyVillage connects visitors with rural destinations and the communities that make them special.</p><p>From traditional food and handmade crafts to local guides, village stays and cultural experiences, the platform makes travel meaningful while strengthening local economies.</p><div class="impact"><div><strong>Local First</strong><span>Discover community businesses</span></div><div><strong>Responsible</strong><span>Travel with a lighter footprint</span></div></div></div>
+      </div>
+    </section>
+  </main>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div><div class="footer-brand">🌾 ExploreMyVillage</div><p style="margin-top:10px;max-width:330px">Sustainable rural tourism that connects visitors with local destinations, businesses, artisans, food, culture and experiences.</p></div>
-      <div class="footer-col"><h4>Explore</h4><a href="#destinations">Destinations</a><a href="#local">Local Economy</a><a href="#experiences">Experiences</a></div>
-      <div class="footer-col"><h4>Platform</h4><a href="#about">About us</a><a href="#home">Our mission</a><a href="mailto:hello@explorem yvillage.example" onclick="this.href='mailto:hello@exploremyvillage.example'">Contact</a></div>
-      <div class="footer-col"><h4>Travel responsibly</h4><p>Respect local customs.</p><p>Choose local services.</p><p>Leave places better.</p></div>
-    </div>
-    <div class="footer-bottom"><span>© 2026 ExploreMyVillage. Frontend prototype.</span><span>Built for sustainable rural tourism & local economy.</span></div>
-  </div>
-</footer>
+  <footer><div class="container footer-grid"><div><div class="footer-brand">🌾 ExploreMyVillage</div><p>Connecting visitors with India's rural destinations, people and local economy.</p></div><div class="footer-col"><h4>Explore</h4><a href="#explore">Destinations</a><a href="#economy">Local Economy</a></div><div class="footer-col"><h4>Community</h4><p>Local stays</p><p>Artisans</p><p>Guides</p></div><div class="footer-col"><h4>Mission</h4><p>Sustainable rural tourism</p><p>Community-first travel</p></div></div><div class="container footer-bottom"><span>© <span id="year"></span> ExploreMyVillage</span><span>Travel • Discover • Support 🌱</span></div></footer>
 </div>
 
-<!-- DETAIL MODAL -->
-<div class="modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
-  <div class="modal-card"><div class="modal-head"><div><h3 id="detailTitle">Destination</h3><p id="detailSubtitle">Explore the destination</p></div><button class="close" data-close="detailModal" type="button" aria-label="Close">×</button></div><div class="modal-body"><div class="detail-grid"><div class="detail-image"><img id="detailImage" src="" alt=""></div><div class="detail-copy"><div class="location" id="detailLocation"></div><p id="detailDescription"></p><div class="detail-list"><div id="detailFood">🍲 Local food</div><div id="detailCraft">🎨 Local craft</div><div id="detailCulture">🎭 Culture</div><div id="detailHost">🏡 Community host</div></div><div class="modal-actions"><button class="btn btn-primary" id="bookBtn" type="button">Plan a visit</button><button class="btn btn-outline" id="contactBtn" type="button">Contact host</button></div></div></div></div></div>
+<!-- DESTINATION MODAL -->
+<div id="destinationModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div id="modalOverlay" class="modal-overlay"></div>
+  <div class="modal-card"><button id="modalClose" class="modal-close" type="button" aria-label="Close">×</button><img id="modalImage" src="" alt=""><div class="modal-content"><div id="modalCategory" class="eyebrow"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="modal-details"><div><span>📍 Location</span><strong id="modalLocation"></strong></div><div><span>🍲 Food</span><strong id="modalFood"></strong></div><div><span>🎨 Craft</span><strong id="modalCraft"></strong></div><div><span>🎭 Culture</span><strong id="modalCulture"></strong></div></div><div class="modal-actions"><button id="visitBtn" class="btn btn-primary" type="button">Plan a Visit</button><button id="modalClose2" class="btn btn-outline" type="button">Close</button></div></div></div>
 </div>
 
-<!-- BOOKING MODAL -->
-<div class="modal" id="bookingModal" role="dialog" aria-modal="true"><div class="modal-card"><div class="modal-head"><div><h3>Plan your visit</h3><p id="bookingDestination">Destination</p></div><button class="close" data-close="bookingModal" type="button">×</button></div><div class="modal-body"><form id="bookingForm"><div class="booking-grid"><div><label>Visit date</label><input type="date" id="visitDate" required></div><div><label>Travellers</label><select id="travellers"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div><div class="full"><label>Experience</label><select id="experienceSelect"><option>Local culture & village walk</option><option>Traditional food experience</option><option>Craft & artisan visit</option><option>Nature & responsible travel</option></select></div><div class="full"><label>Message to host</label><input id="bookingMessage" placeholder="Tell the host what you would like to experience…"></div></div><div class="price-box"><span>Estimated community experience fee</span><span>₹499</span></div><div class="modal-actions"><button class="btn btn-primary" type="submit">Send visit request</button><button class="btn btn-outline" data-close="bookingModal" type="button">Cancel</button></div></form></div></div></div>
+<!-- VISIT MODAL -->
+<div id="visitModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="visitTitle">
+  <div id="visitOverlay" class="modal-overlay"></div>
+  <div class="visit-card"><button id="visitClose" class="modal-close" type="button" aria-label="Close">×</button><div class="eyebrow">Plan Your Visit</div><h2 id="visitTitle">Plan a rural experience</h2><p>Send your visit request and start planning your community experience.</p><form id="visitForm"><div class="field"><label for="visitorName">Your name</label><input id="visitorName" type="text" required></div><div class="field"><label for="visitDate">Preferred date</label><input id="visitDate" type="date" required></div><div class="field"><label for="visitorMessage">Message</label><textarea id="visitorMessage" rows="4" placeholder="Tell us about your visit..." required></textarea></div><button class="primary" type="submit">Send Visit Request</button></form></div>
+</div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script>
-'use strict';
-
-const destinations = [
- {id:'tarkarli',name:'Tarkarli Beach',region:'Maharashtra',type:'Coastal',place:'Sindhudurg, Maharashtra',image:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85',desc:'A Konkan coastal escape known for clear waters, village life, seafood and water-based experiences.',food:'Malvani seafood & sol kadhi',craft:'Coconut, bamboo & local handicrafts',culture:'Konkan village traditions',host:'Local homestays & guides',tags:['Beach','Malvani food','Homestay']},
- {id:'amboli',name:'Amboli',region:'Maharashtra',type:'Hill',place:'Sindhudurg, Maharashtra',image:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85',desc:'A lush Western Ghats destination with waterfalls, forests, viewpoints and a rich biodiversity corridor.',food:'Local Maharashtrian meals',craft:'Forest-inspired handmade products',culture:'Ghat village traditions',host:'Nature guides & homestays',tags:['Western Ghats','Waterfalls','Nature']},
- {id:'sindhudurg',name:'Sindhudurg Fort',region:'Maharashtra',type:'Heritage',place:'Malvan, Maharashtra',image:'https://images.unsplash.com/photo-1600100397608-f010f6d5f7b1?auto=format&fit=crop&w=900&q=85',desc:'A historic sea fort surrounded by the culture, food and fishing communities of the Konkan coast.',food:'Malvani thali',craft:'Traditional coastal crafts',culture:'Maratha maritime heritage',host:'Boat operators & local guides',tags:['Fort','Heritage','Coast']},
- {id:'mahabaleshwar',name:'Mahabaleshwar',region:'Maharashtra',type:'Hill',place:'Satara, Maharashtra',image:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85',desc:'A cool hill destination surrounded by farms, forests, viewpoints and local produce.',food:'Strawberries & farm produce',craft:'Handmade rural products',culture:'Hill-station village culture',host:'Farm stays & local guides',tags:['Farms','Hills','Local produce']},
- {id:'ganpatipule',name:'Ganpatipule',region:'Maharashtra',type:'Coastal',place:'Ratnagiri, Maharashtra',image:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=85',desc:'A coastal destination where temple traditions, beaches, farms and Konkan food come together.',food:'Konkani cuisine',craft:'Coconut & local craft',culture:'Temple and coastal traditions',host:'Family-run stays & guides',tags:['Temple','Beach','Konkan']},
- {id:'ajanta',name:'Ajanta & Ellora Caves',region:'Maharashtra',type:'Heritage',place:'Aurangabad region, Maharashtra',image:'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=900&q=85',desc:'World-renowned rock-cut heritage surrounded by regional crafts, cuisine and community stories.',food:'Regional Maharashtrian cuisine',craft:'Paithani and regional crafts',culture:'Ancient art & heritage',host:'Local heritage guides',tags:['Heritage','Art','History']},
- {id:'munnar',name:'Munnar',region:'Kerala',type:'Hill',place:'Idukki, Kerala',image:'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=85',desc:'Tea landscapes, mountain villages and local food make Munnar a strong base for slow nature travel.',food:'Kerala tea & local cuisine',craft:'Tea and handmade products',culture:'Hill communities & tea heritage',host:'Tea estate stays & guides',tags:['Tea','Mountains','Nature']},
- {id:'hampi',name:'Hampi',region:'Karnataka',type:'Heritage',place:'Vijayanagara, Karnataka',image:'https://images.unsplash.com/photo-1600100397608-f010f6d5f7b1?auto=format&fit=crop&w=900&q=85',desc:'A dramatic heritage landscape where ancient ruins meet local crafts, farms and village communities.',food:'North Karnataka cuisine',craft:'Handloom & stone crafts',culture:'Vijayanagara heritage',host:'Local guides & stays',tags:['Ruins','Heritage','Craft']},
- {id:'goa',name:'Rural Goa',region:'Goa',type:'Coastal',place:'Goa, India',image:'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=85',desc:'Beyond beaches, discover village kitchens, spice farms, local art and Goa’s living traditions.',food:'Goan home cooking',craft:'Pottery & handmade products',culture:'Indo-Portuguese village culture',host:'Homestays & farm hosts',tags:['Village','Food','Spice farms']},
- {id:'taj',name:'Agra Heritage Region',region:'Uttar Pradesh',type:'Heritage',place:'Agra, Uttar Pradesh',image:'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=85',desc:'Explore heritage while connecting with local craftspeople, food traditions and neighbourhood stories.',food:'Agra & Mughlai cuisine',craft:'Marble inlay & handicrafts',culture:'Mughal heritage',host:'Local cultural guides',tags:['Heritage','Craft','Food']}
-];
-
-const $ = id => document.getElementById(id);
-let currentDestination = null;
-let authMode = 'login';
-
-function initials(name){return (name||'User').trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'U'}
-function showToast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),3000)}
-function openModal(id){$(id).classList.add('open');document.body.style.overflow='hidden'}
-function closeModal(id){$(id).classList.remove('open');if(!document.querySelector('.modal.open'))document.body.style.overflow=''}
-
-function setAuthMode(mode){
-  authMode=mode;
-  const register=mode==='register';
-  $('loginTab').classList.toggle('active',!register);$('registerTab').classList.toggle('active',register);
-  $('nameField').classList.toggle('hidden',!register);$('confirmField').classList.toggle('hidden',!register);
-  $('authTitle').textContent=register?'Create your account':'Welcome back';
-  $('authSubtitle').textContent=register?'Create a profile to discover rural destinations and experiences.':'Sign in to explore destinations and local experiences.';
-  $('authSubmit').textContent=register?'Create ExploreMyVillage account':'Login to ExploreMyVillage';
-  $('authMessage').textContent='';
-  $('authPassword').autocomplete=register?'new-password':'current-password';
-}
-
-function saveUser(user){localStorage.setItem('exploreMyVillageUser',JSON.stringify(user));}
-function getUser(){try{return JSON.parse(localStorage.getItem('exploreMyVillageUser')||'null')}catch{return null}}
-function enterSite(user){
-  $('authPage').classList.add('hidden');$('site').classList.remove('hidden');
-  $('profileName').textContent=user.name;$('profileAvatar').textContent=initials(user.name);
-  window.scrollTo({top:0,behavior:'instant'});
-}
-function logout(){localStorage.removeItem('exploreMyVillageSession');$('site').classList.add('hidden');$('authPage').classList.remove('hidden');setAuthMode('login');$('authForm').reset();showToast('You have been logged out.');}
-
-$('loginTab').addEventListener('click',()=>setAuthMode('login'));
-$('registerTab').addEventListener('click',()=>setAuthMode('register'));
-$('showPassword').addEventListener('click',()=>{const input=$('authPassword');const show=input.type==='password';input.type=show?'text':'password';$('showPassword').textContent=show?'Hide':'Show'});
-$('authForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  const email=$('authEmail').value.trim().toLowerCase();const password=$('authPassword').value;
-  const msg=$('authMessage');msg.textContent='';
-  if(!/^\S+@\S+\.\S+$/.test(email)){msg.textContent='Please enter a valid email address.';return}
-  if(password.length<6){msg.textContent='Password must contain at least 6 characters.';return}
-  if(authMode==='register'){
-    const name=$('authName').value.trim();const confirm=$('confirmPassword').value;
-    if(name.length<2){msg.textContent='Please enter your full name.';return}
-    if(password!==confirm){msg.textContent='Passwords do not match.';return}
-    const user={name,email,password};saveUser(user);localStorage.setItem('exploreMyVillageSession','1');enterSite(user);showToast('Welcome to ExploreMyVillage, '+name+'!');
-  }else{
-    const saved=getUser();
-    if(!saved){msg.textContent='No account found. Please register first.';return}
-    if(saved.email!==email||saved.password!==password){msg.textContent='Incorrect email or password.';return}
-    localStorage.setItem('exploreMyVillageSession','1');enterSite(saved);showToast('Welcome back, '+saved.name+'!');
-  }
-});
-$('logoutBtn').addEventListener('click',logout);
-
-function renderDestinations(){
-  const query=$('searchInput').value.trim().toLowerCase();const region=$('regionFilter').value;const type=$('typeFilter').value;
-  const list=destinations.filter(d=>{
-    const hay=[d.name,d.region,d.type,d.place,d.desc,d.food,d.craft,d.culture,...d.tags].join(' ').toLowerCase();
-    return (!query||hay.includes(query))&&(region==='all'||d.region===region)&&(type==='all'||d.type===type);
-  });
-  $('destinationGrid').innerHTML=list.length?list.map(d=>`<article class="destination-card"><div class="destination-img"><img src="${d.image}" alt="${d.name}" loading="lazy" onerror="this.style.display='none'"><span class="tag">${d.type}</span></div><div class="destination-body"><h3>${d.name}</h3><div class="location">📍 ${d.place}</div><p>${d.desc}</p><div class="chips">${d.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div><div class="card-actions"><button class="btn btn-outline details-btn" data-id="${d.id}" type="button">View details</button><button class="btn btn-primary plan-btn" data-id="${d.id}" type="button">Plan visit</button></div></div></article>`).join(''):`<div class="empty"><strong>No destinations found.</strong><br>Try a different search or filter.</div>`;
-}
-['searchInput','regionFilter','typeFilter'].forEach(id=>$(id).addEventListener('input',renderDestinations));
-$('destinationGrid').addEventListener('click',e=>{const details=e.target.closest('.details-btn');const plan=e.target.closest('.plan-btn');if(details)showDetails(details.dataset.id);if(plan)startBooking(plan.dataset.id)});
-
-function showDetails(id){
-  const d=destinations.find(x=>x.id===id);if(!d)return;currentDestination=d;
-  $('detailTitle').textContent=d.name;$('detailSubtitle').textContent='Community-first destination guide';$('detailImage').src=d.image;$('detailImage').alt=d.name;$('detailLocation').textContent='📍 '+d.place;$('detailDescription').textContent=d.desc;$('detailFood').textContent='🍲 '+d.food;$('detailCraft').textContent='🎨 '+d.craft;$('detailCulture').textContent='🎭 '+d.culture;$('detailHost').textContent='🏡 '+d.host;openModal('detailModal');
-}
-function startBooking(id){const d=destinations.find(x=>x.id===id);if(!d)return;currentDestination=d;$('bookingDestination').textContent=d.name+' · '+d.place;const min=new Date();min.setDate(min.getDate()+1);$('visitDate').min=min.toISOString().split('T')[0];$('visitDate').value='';openModal('bookingModal')}
-$('bookBtn').addEventListener('click',()=>{closeModal('detailModal');if(currentDestination)startBooking(currentDestination.id)});
-$('contactBtn').addEventListener('click',()=>{if(!currentDestination)return;closeModal('detailModal');showToast('Host contact request prepared for '+currentDestination.name+'.')});
-$('bookingForm').addEventListener('submit',e=>{e.preventDefault();if(!$('visitDate').value){showToast('Please choose a visit date.');return}closeModal('bookingModal');showToast('Visit request sent for '+currentDestination.name+' — demo confirmation created.');$('bookingForm').reset()});
-$('experienceBtn').addEventListener('click',()=>showToast('More community experiences are coming soon.'));
-
-document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closeModal(btn.dataset.close)));
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.open').forEach(m=>closeModal(m.id))});
-$('mobileMenu').addEventListener('click',()=>$('navLinks').classList.toggle('open'));
-document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>$('navLinks').classList.remove('open')));
-
-renderDestinations();
-const session=localStorage.getItem('exploreMyVillageSession');const user=getUser();
-if(session==='1'&&user)enterSite(user);else setAuthMode('login');
-</script>
+<div id="toast" class="toast" aria-live="polite"></div>
+<script src="script.js" defer></script>
 </body>
 </html>
